@@ -1,0 +1,2 @@
+class NoSubgraphIsomorphismError(ValueError):
+    pass
