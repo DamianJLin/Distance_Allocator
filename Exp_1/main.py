@@ -55,6 +55,7 @@ with open(log_path, 'w') as log_file:
             list(map(int, tup))
             for tup in re.findall(pattern, circ_str)
         ]
+        # Remove redundant graphml properties.
         del ag.vertex_properties["_graphml_vertex_id"]
         del ag.edge_properties["_graphml_edge_id"]
 
@@ -122,7 +123,7 @@ with open(log_path, 'w') as log_file:
                             sub.remove_vertex(u)
                     iso_map = iso_map_prev
             if iso_found_in_layer:
-                # Continue search with new mapping.
+                # Continue search in next layer, with new mapping.
                 continue
             else:
                 # Finish search.
