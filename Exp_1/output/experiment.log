@@ -1,0 +1,333 @@
+2022-02-01 20:55:16.730037
+
+
+Architecture: AG_Tokyo, Circuit: 0410184_169
+Time:  2.24 s.
+|V| = 13,
+|E| = 13.
+Graphic at output/AG_Tokyo_0410184_169.png.
+
+Architecture: AG_Tokyo, Circuit: 3_17_13
+Time:  0.000154 s.
+|V| = 3,
+|E| = 2.
+Graphic at output/AG_Tokyo_3_17_13.png.
+
+Architecture: AG_Tokyo, Circuit: 4_49_16
+Time:  0.00344 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_4_49_16.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt10-v1_81
+Time:  0.00314 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_4gt10-v1_81.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_82
+Time:  8.87e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt11_82.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_83
+Time:  8.73e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt11_83.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_84
+Time:  0.000198 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4gt11_84.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_86
+Time:  9.16e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt12-v0_86.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_87
+Time:  9.2e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt12-v0_87.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_88
+Time:  0.000191 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4gt12-v0_88.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v1_89
+Time:  0.000697 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo_4gt12-v1_89.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt13-v1_93
+Time:  0.00077 s.
+|V| = 4,
+|E| = 2.
+Graphic at output/AG_Tokyo_4gt13-v1_93.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_90
+Time:  8.77e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt13_90.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_91
+Time:  9.25e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt13_91.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_92
+Time:  0.00334 s.
+|V| = 5,
+|E| = 3.
+Graphic at output/AG_Tokyo_4gt13_92.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_72
+Time:  0.000339 s.
+|V| = 4,
+|E| = 4.
+Graphic at output/AG_Tokyo_4gt4-v0_72.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_73
+Time:  0.000163 s.
+|V| = 3,
+|E| = 2.
+Graphic at output/AG_Tokyo_4gt4-v0_73.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_78
+Time:  0.000106 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt4-v0_78.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_79
+Time:  0.000107 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt4-v0_79.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_80
+Time:  0.000216 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4gt4-v0_80.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v1_74
+Time:  0.000229 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4gt4-v1_74.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_75
+Time:  0.000785 s.
+|V| = 4,
+|E| = 2.
+Graphic at output/AG_Tokyo_4gt5_75.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_76
+Time:  0.000155 s.
+|V| = 3,
+|E| = 2.
+Graphic at output/AG_Tokyo_4gt5_76.png.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_77
+Time:  8.92e-05 s.
+|V| = 2,
+|E| = 1.
+Graphic at output/AG_Tokyo_4gt5_77.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-bdd_287
+Time:  0.000611 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo_4mod5-bdd_287.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_18
+Time:  0.000195 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4mod5-v0_18.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_19
+Time:  0.000347 s.
+|V| = 4,
+|E| = 4.
+Graphic at output/AG_Tokyo_4mod5-v0_19.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_20
+Time:  0.000192 s.
+|V| = 4,
+|E| = 3.
+Graphic at output/AG_Tokyo_4mod5-v0_20.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_22
+Time:  0.000406 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo_4mod5-v1_22.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_23
+Time:  0.000183 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4mod5-v1_23.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_24
+Time:  0.00336 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_4mod5-v1_24.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod7-v0_94
+Time:  0.00334 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_4mod7-v0_94.png.
+
+Architecture: AG_Tokyo, Circuit: 4mod7-v1_96
+Time:  0.000184 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_4mod7-v1_96.png.
+
+Architecture: AG_Tokyo, Circuit: 9symml_195
+Time:  5.89 s.
+|V| = 9,
+|E| = 6.
+Graphic at output/AG_Tokyo_9symml_195.png.
+
+Architecture: AG_Tokyo, Circuit: adr4_197
+Time:  0.00323 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_adr4_197.png.
+
+Architecture: AG_Tokyo, Circuit: aj-e11_165
+Time:  0.000239 s.
+|V| = 4,
+|E| = 3.
+Graphic at output/AG_Tokyo_aj-e11_165.png.
+
+Architecture: AG_Tokyo, Circuit: alu-bdd_288
+Time:  0.00912 s.
+|V| = 6,
+|E| = 5.
+Graphic at output/AG_Tokyo_alu-bdd_288.png.
+
+Architecture: AG_Tokyo, Circuit: alu-v1_28
+Time:  0.000176 s.
+|V| = 4,
+|E| = 3.
+Graphic at output/AG_Tokyo_alu-v1_28.png.
+
+Architecture: AG_Tokyo, Circuit: alu-v1_29
+Time:  0.0003 s.
+|V| = 4,
+|E| = 3.
+Graphic at output/AG_Tokyo_alu-v1_29.png.
+
+Architecture: AG_Tokyo, Circuit: cm82a_208
+Time:  0.000194 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_cm82a_208.png.
+
+Architecture: AG_Tokyo, Circuit: con1_216
+Time:  0.0228 s.
+|V| = 7,
+|E| = 7.
+Graphic at output/AG_Tokyo_con1_216.png.
+
+Architecture: AG_Tokyo, Circuit: decod24-v0_38
+Time:  0.000178 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_decod24-v0_38.png.
+
+Architecture: AG_Tokyo, Circuit: ex-1_166
+Time:  0.000184 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_ex-1_166.png.
+
+Architecture: AG_Tokyo, Circuit: ham3_102
+Time:  0.000187 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_ham3_102.png.
+
+Architecture: AG_Tokyo, Circuit: hwb7_59
+Time:  0.000466 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_hwb7_59.png.
+
+Architecture: AG_Tokyo, Circuit: hwb8_113
+Time:  0.00445 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_hwb8_113.png.
+
+Architecture: AG_Tokyo, Circuit: mlp4_245
+Time:  0.00935 s.
+|V| = 6,
+|E| = 6.
+Graphic at output/AG_Tokyo_mlp4_245.png.
+
+Architecture: AG_Tokyo, Circuit: mod10_171
+Time:  0.000771 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo_mod10_171.png.
+
+Architecture: AG_Tokyo, Circuit: one-two-three-v0_98
+Time:  0.00504 s.
+|V| = 5,
+|E| = 3.
+Graphic at output/AG_Tokyo_one-two-three-v0_98.png.
+
+Architecture: AG_Tokyo, Circuit: one-two-three-v3_101
+Time:  0.000766 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo_one-two-three-v3_101.png.
+
+Architecture: AG_Tokyo, Circuit: rd53_130
+Time:  0.00317 s.
+|V| = 5,
+|E| = 4.
+Graphic at output/AG_Tokyo_rd53_130.png.
+
+Architecture: AG_Tokyo, Circuit: rd53_131
+Time:  0.152 s.
+|V| = 7,
+|E| = 5.
+Graphic at output/AG_Tokyo_rd53_131.png.
+
+Architecture: AG_Tokyo, Circuit: sym9_148
+Time:  0.152 s.
+|V| = 7,
+|E| = 5.
+Graphic at output/AG_Tokyo_sym9_148.png.
+
+Architecture: AG_Tokyo, Circuit: sym9_193
+Time:  5.77 s.
+|V| = 9,
+|E| = 6.
+Graphic at output/AG_Tokyo_sym9_193.png.
+
+Architecture: AG_Tokyo, Circuit: sys6-v0_111
+Time:  0.000191 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo_sys6-v0_111.png.
+
