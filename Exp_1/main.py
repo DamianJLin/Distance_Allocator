@@ -24,7 +24,7 @@ for path in out_dir.iterdir():
     path.unlink()
 
 # Create log file and keep it open.
-log_path = out_dir / 'output.log'
+log_path = out_dir / 'experiment.log'
 log_path.touch(exist_ok=True)
 with open(log_path, 'w') as log_file:
     log_file.write(
@@ -136,7 +136,7 @@ with open(log_path, 'w') as log_file:
         log_file.write(f'Time: {delta_time: .3g} s.\n')
         if iso_map:
             img_path = out_dir / (str(ag_path.stem).rstrip('.graphml') + '_'
-                                  + str(circ_path.stem).rstrip('.qasm.txt') + '.pdf')
+                                  + str(circ_path.stem).rstrip('.qasm.txt') + '.png')
             save_embedding_image(
                 subgraph=sub,
                 graph=ag,

@@ -16,6 +16,5 @@ def save_embedding_image(subgraph, graph, mapping, location):
         graph,
         vertex_fill_color=vmask,
         edge_color=emask,
-        output=str(location),
-        fmt='pdf'
+        output=str(location)
     )
