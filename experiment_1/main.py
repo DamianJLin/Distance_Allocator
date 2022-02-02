@@ -4,8 +4,10 @@ import re
 import itertools
 from datetime import datetime
 import time
+import numpy as np
 import graph_tool.all as gt
 from lib.utils import NoSubgraphIsomorphismError, layer, save_embedding_image
+from lib.distance_calculator import DistanceCalculator
 
 ag_dir = Path(__file__).resolve().parent / 'arch_graphs'
 circ_dir = Path(__file__).resolve().parent / 'circuits'
@@ -80,6 +82,7 @@ with open(log_path, 'w') as log_file:
         # Find maximal top sublist (largest circuit[:n] that can still be embedded as a subgraph). We do this by looping
         # over all gates in the circuit. We then look first at that gate, then all gates in the same layer (parallel
         # gates) and greedily add one to the top sublist.
+        # TODO: Confirm not bugged, in that it cannot skip layers or anything silly.
         for i, (u_layer, v_layer) in enumerate(circuit):
 
             iso_found_in_layer = False
@@ -135,7 +138,7 @@ with open(log_path, 'w') as log_file:
 
         # Stop timing.
         end_time = time.time()
-        delta_time = end_time - start_time
+        time_initial_circuit = end_time - start_time
 
         # Logging, printing, saving image to file.
         log_file.write(f'Compute initial circuit: {time_initial_circuit: .3g} s.\n')
@@ -155,11 +158,72 @@ with open(log_path, 'w') as log_file:
             log_file.write(
                 f'Graphic at {img_path.parent.name}/{img_path.name}.\n'
             )
+            if verbose:
+                print(
+                    f'Initial subcircuit found with |V| = {sub.num_vertices(ignore_filter=True)}, '
+                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit: .3g} s.')
+
         else:
             log_file.write(
-                f'No map was found. Possible error.\n'
+                f'No initial subcircuit was found. Possible error.\n'
             )
-        log_file.write('\n')
+            if verbose:
+                print('Failed to find initial subcircuit.')
+            continue  # Remaining algorithm is redundant.
 
-        # iso_map_all = gt.subgraph_isomorphism(sub, ag, max_n=0, induced=False)
+        if verbose:
+            print('Finding alternative embeddings of initial circuit...')
 
+        start_time = time.time()
+
+        # Find all embeddings.
+        embeddings_all = gt.subgraph_isomorphism(sub, ag, max_n=0, induced=False)
+
+        end_time = time.time()
+        time_find_embeddings = end_time - start_time
+
+        log_file.write(f'Compute {len(embeddings_all)} embeddings: {time_find_embeddings: .3g} s.')
+        if verbose:
+            print(f'Found {len(embeddings_all)} embeddings of initial circuit in {time_find_embeddings: .3g} s.')
+
+        # Initialize distance list with distances np.inf.
+        distances = [np.inf for i, emb in enumerate(embeddings_all)]
+
+        # Initialise DistanceCalculator object for efficiency with repeated distance calls.
+        dc = DistanceCalculator(ag)
+
+        if verbose:
+            print(f'Calculating distance for each embedding and finding minimum...')
+
+        start_time = time.time()
+
+        # Calculate distance.
+        for i, emb in enumerate(embeddings_all):
+
+            dist_cuml = 0
+
+            for (u_qasm, v_qasm) in circuit:
+                if u_qasm in qubit_by_qasm_id and v_qasm in qubit_by_qasm_id:
+                    dist_cuml += dc.distance(
+                        qubit_by_qasm_id[u_qasm],
+                        qubit_by_qasm_id[v_qasm]
+                    )
+
+            distances[i] = dist_cuml
+
+        # Find embedding of minimum distance.
+        best_embedding = min(distances)
+        best_embedding_dist = distances[best_embedding]
+
+        end_time = time.time()
+        time_calculate_distance = end_time - start_time
+
+        log_file.write(
+            f'Compute embedding with min. dist. of {best_embedding_dist}: '
+            f'{time_calculate_distance: .3g} s.'
+        )
+        if verbose:
+            print(
+                f'Calculated embedding with min. distance of {best_embedding_dist} in '
+                f'{time_calculate_distance: .3g} s.'
+            )
