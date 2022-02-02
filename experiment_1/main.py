@@ -182,7 +182,7 @@ with open(log_path, 'w') as log_file:
         start_time = time.time()
 
         # Find all embeddings.
-        embeddings_all = gt.subgraph_isomorphism(sub, ag, max_n=0, induced=False)
+        embeddings_all = gt.subgraph_isomorphism(sub, ag, max_n=1000, induced=False)
 
         end_time = time.time()
         time_find_embeddings = end_time - start_time
