@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 import re
 import itertools
@@ -17,6 +18,11 @@ circ_paths = sorted(list(
     circ_dir.glob('*.qasm.txt')
 ))
 
+# Set verbosity.
+verbose = False
+if '-v' in sys.argv or '--verbose' in sys.argv:
+    verbose = True
+
 # Clear log path.
 for path in out_dir.iterdir():
     path.unlink()
@@ -34,8 +40,8 @@ with open(log_path, 'w') as log_file:
 
         # Print and write to the log file.
         print(
-            f'For architecture {str(ag_path.stem).rstrip(".graphml")}, '
-            f'allocating circuit {str(circ_path.stem).rstrip(".qasm.txt")}...'
+            f'Starting allocation for architecture {str(ag_path.stem).rstrip(".graphml")}, '
+            f'circuit {str(circ_path.stem).rstrip(".qasm.txt")}...'
         )
         log_file.write(
             f'Architecture: {str(ag_path.stem).rstrip(".graphml")}, '
@@ -60,14 +66,15 @@ with open(log_path, 'w') as log_file:
         sub = gt.Graph()
         sub.set_directed(False)
         sub.set_fast_edge_removal(fast=True)
-
         iso_map = None
 
         # Keeping track of logical qubits by their number in the qasm files. This is because graph_tool node ids are
         # always ordered starting from 0, so we cannot directly use them to keep track of qubits.
         qubit_by_qasm_id = {}
 
-        # Start timing.
+        if verbose:
+            print('Finding initial subcircuit...')
+
         start_time = time.time()
 
         # Find maximal top sublist (largest circuit[:n] that can still be embedded as a subgraph). We do this by looping
@@ -130,8 +137,8 @@ with open(log_path, 'w') as log_file:
         end_time = time.time()
         delta_time = end_time - start_time
 
-        # Logging, saving image to file.
-        log_file.write(f'Time: {delta_time: .3g} s.\n')
+        # Logging, printing, saving image to file.
+        log_file.write(f'Compute initial circuit: {time_initial_circuit: .3g} s.\n')
         if iso_map:
             img_path = out_dir / (str(ag_path.stem).rstrip('.graphml') + '_'
                                   + str(circ_path.stem).rstrip('.qasm.txt') + '.png')
