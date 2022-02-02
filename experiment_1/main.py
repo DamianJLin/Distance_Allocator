@@ -212,8 +212,8 @@ with open(log_path, 'w') as log_file:
             distances[i] = dist_cuml
 
         # Find embedding of minimum distance.
-        best_embedding = min(distances)
-        best_embedding_dist = distances[best_embedding]
+        idx_min, best_embedding_dist = min(enumerate(distances), key=lambda x: x[1])
+        best_embedding = embeddings_all[idx_min]
 
         end_time = time.time()
         time_calculate_distance = end_time - start_time
