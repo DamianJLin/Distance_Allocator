@@ -33,6 +33,7 @@ for path in out_dir.iterdir():
 time_initial_circuit_total = 0.0
 time_find_embeddings_total = 0.0
 time_calculate_distance_total = 0.0
+time_find_min_distance_total = 0.0
 
 # Create log file and keep it open.
 log_path = out_dir / 'experiment.log'
@@ -216,12 +217,17 @@ with open(log_path, 'w') as log_file:
 
             distances[i] = dist_cuml
 
+        end_time = time.time()
+        time_calculate_distance = end_time - start_time
+
+        start_time = time.time()
+
         # Find embedding of minimum distance.
         idx_min, best_embedding_dist = min(enumerate(distances), key=lambda x: x[1])
         best_embedding = embeddings_all[idx_min]
 
         end_time = time.time()
-        time_calculate_distance = end_time - start_time
+        time_find_min_distance = end_time - start_time
 
         log_file.write(
             f'Compute embedding with min. dist. of {best_embedding_dist}: '
@@ -238,9 +244,11 @@ with open(log_path, 'w') as log_file:
         time_initial_circuit_total += time_initial_circuit
         time_find_embeddings_total += time_find_embeddings
         time_calculate_distance_total += time_calculate_distance
+        time_find_min_distance_total += time_find_min_distance
 
 
-total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total
+total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total +\
+                 time_find_min_distance_total
 
 if verbose:
 
@@ -259,8 +267,12 @@ if verbose:
         f'{format_time(time_find_embeddings_total)}'
     )
     print(
-        f'\tComputing embedding of minimum distance: \t'
+        f'\tComputing distance for all embeddings: \t\t'
         f'{format_time(time_calculate_distance_total)}'
+    )
+    print(
+        f'\tFinding embedding with minimum distance: \t'
+        f'{format_time(time_find_min_distance)}'
     )
 
     print()
