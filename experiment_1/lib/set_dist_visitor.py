@@ -12,16 +12,26 @@ class SetDistVisitor(gt.BFSVisitor):
     number of edges (edges are unweighted).
     """
 
-    def __init__(self, dist):
-        if not (dist.python_value_type() is int or dist.python_value_type is float):
+    def __init__(self, dist: gt.VertexPropertyMap):
+        if not (dist.python_value_type() is int):
             raise TypeError(
-                f'The property map dist must be of type int or float. '
+                f'The property map dist must be of type int. '
                 f'Encountered type: {dist.python_value_type}'
             )
         self.dist = dist
+        self.start_flag = False
+
+        # Overriding BFSVisitor.initialize_vertex() would be more pythonic, but it appears not to work (perhaps a bug).
+        for u in dist.get_graph().vertices():
+            dist[u] = -1
 
     def tree_edge(self, e):
         self.dist[e.target()] = self.dist[e.source()] + 1
+
+    def discover_vertex(self, u):
+        if not self.start_flag:
+            self.start_flag = True
+            self.dist[u] = 0
 
 
 class VerboseSetDistVisitor(SetDistVisitor):
@@ -34,10 +44,10 @@ class VerboseSetDistVisitor(SetDistVisitor):
         self.name = name
 
     def discover_vertex(self, u):
+        super().discover_vertex(u)
         indent = self.dist[u]
         print('\t' * indent + f'{self.name[u]} has been discovered at d = {self.dist[u]}')
 
     def examine_vertex(self, u):
         indent = self.dist[u]
         print('\t' + '    ' * indent + f'{self.name[u]} has been examined ...')
-
