@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 import re
 import itertools
-from datetime import datetime
+import datetime
 import time
 import numpy as np
 import graph_tool.all as gt
@@ -29,12 +29,17 @@ if '-v' in sys.argv or '--verbose' in sys.argv:
 for path in out_dir.iterdir():
     path.unlink()
 
+# Keep track of time spent.
+time_initial_circuit_total = 0.0
+time_find_embeddings_total = 0.0
+time_calculate_distance_total = 0.0
+
 # Create log file and keep it open.
 log_path = out_dir / 'experiment.log'
 log_path.touch(exist_ok=True)
 with open(log_path, 'w') as log_file:
     log_file.write(
-        str(datetime.now()) + '\n\n\n'
+        str(datetime.datetime.now()) + '\n\n\n'
     )
 
     # Loop through all combinations of architectures and circuits.
@@ -227,3 +232,39 @@ with open(log_path, 'w') as log_file:
                 f'Calculated embedding with min. distance of {best_embedding_dist} in '
                 f'{time_calculate_distance: .3g} s.'
             )
+            print()
+
+        # Add time spent.
+        time_initial_circuit_total += time_initial_circuit
+        time_find_embeddings_total += time_find_embeddings
+        time_calculate_distance_total += time_calculate_distance
+
+
+total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total
+
+if verbose:
+
+    def format_time(seconds):
+        return str(
+            datetime.timedelta(seconds=round(seconds))
+        )
+
+    print('Time spent...')
+    print(
+        f'\tConstructing initial subcircuit/embedding: \t'
+        f'{format_time(time_initial_circuit_total)}'
+    )
+    print(
+        f'\tFinding other embeddings: \t\t\t'
+        f'{format_time(time_find_embeddings_total)}'
+    )
+    print(
+        f'\tComputing embedding of minimum distance: \t'
+        f'{format_time(time_calculate_distance_total)}'
+    )
+
+    print()
+    print(
+        f'\tTotal: \t\t\t\t\t\t'
+        f'{format_time(total_time_all)}'
+    )
