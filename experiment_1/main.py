@@ -167,7 +167,8 @@ with open(log_path, 'w') as log_file:
             if verbose:
                 print(
                     f'Initial subcircuit found with |V| = {sub.num_vertices(ignore_filter=True)}, '
-                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit: .3g} s.')
+                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit: .3g} s.'
+                )
 
         else:
             log_file.write(
