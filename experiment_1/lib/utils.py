@@ -1,27 +1,42 @@
 import graph_tool.all as gt
 
 
-class NoSubgraphIsomorphismError(ValueError):
+class NoSubgraphIsomorphism(Exception):
     """
-    Custom error raised when no isomorphic subgraph found.
+    Custom exception raised when no isomorphic subgraph found.
     """
     pass
 
 
-def layer(subcircuit):
+def layer(circuit, mask, logical_qubits):
     """
-    Generates subcircuit[0] then all the gates (edges) in the top layer of subcircuit (all gates that can be run
-    parallel to subcircuit[0]).
+    Generates circuit[0] then all the gates (edges) in the top layer of circuit (all gates that can be run
+    parallel to circuit[0]).
 
-    :param subcircuit: List[List[Int]] the sublist of gates to generate from.
+    :param logical_qubits: Set of logical qubits in the circuit.
+    :param mask: Array of bools for whether gates are already allocated.
+    :param circuit: List[List[Int]] the sublist of gates to generate from.
     :return: None
     """
-    u_init, v_init = subcircuit[0]
-    yield subcircuit[0]
-    k = 1
-    while u_init not in subcircuit[k] and v_init not in subcircuit[k]:
-        yield subcircuit[k]
-        k += 1
+    independent = logical_qubits.copy()
+
+    for j, (x, y) in enumerate(circuit):
+
+        # If a gate is already allocated, ignore and move on.
+        if mask[j]:
+            continue
+
+        # If all logical qubits are depended on at this stage in the circuit, no more gates can be parallel.
+        # Also true if all but one logical qubit is depended on (2 qubits needed for gate).
+        if len(independent) <= 1:
+            break
+
+        # Otherwise, either it is parallel and can be returned, or is not parallel, and depends on a previous gate.
+        gate = {x, y}
+        if gate.issubset(independent):
+            yield j, (x, y)
+
+        independent -= gate
 
     return
 
