@@ -8,6 +8,7 @@ import numpy as np
 import graph_tool.all as gt
 from lib.utils import NoSubgraphIsomorphismError, layer, save_embedding_image
 from lib.distance_calculator import DistanceCalculator
+from termcolor import colored
 
 ag_dir = Path(__file__).resolve().parent / 'arch_graphs'
 circ_dir = Path(__file__).resolve().parent / 'circuits'
@@ -48,8 +49,8 @@ with open(log_path, 'w') as log_file:
 
         # Print and write to the log file.
         print(
-            f'Starting allocation for architecture {str(ag_path.stem).rstrip(".graphml")}, '
-            f'circuit {str(circ_path.stem).rstrip(".qasm.txt")}...'
+            f'Starting allocation for architecture {colored(str(ag_path.stem).rstrip(".graphml"), "blue")}, '
+            f'circuit {colored(str(circ_path.stem).rstrip(".qasm.txt"), "blue")}...'
         )
         log_file.write(
             f'Architecture: {str(ag_path.stem).rstrip(".graphml")}, '
@@ -167,7 +168,7 @@ with open(log_path, 'w') as log_file:
             if verbose:
                 print(
                     f'Initial subcircuit found with |V| = {sub.num_vertices(ignore_filter=True)}, '
-                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit: .3g} s.'
+                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit:.3g} s.'
                 )
 
         else:
@@ -189,9 +190,9 @@ with open(log_path, 'w') as log_file:
         end_time = time.time()
         time_find_embeddings = end_time - start_time
 
-        log_file.write(f'Compute {len(embeddings_all)} embeddings: {time_find_embeddings: .3g} s.')
+        log_file.write(f'Compute {len(embeddings_all)} embeddings: {time_find_embeddings:.3g} s.')
         if verbose:
-            print(f'Found {len(embeddings_all)} embeddings of initial circuit in {time_find_embeddings: .3g} s.')
+            print(f'Found {len(embeddings_all)} embeddings of initial circuit in {time_find_embeddings:.3g} s.')
 
         # Initialize distance list with distances np.inf.
         distances = [np.inf for i, emb in enumerate(embeddings_all)]
@@ -224,7 +225,7 @@ with open(log_path, 'w') as log_file:
         start_time = time.time()
 
         # Find embedding of minimum distance.
-        idx_min, best_embedding_dist = min(enumerate(distances), key=lambda x: x[1])
+        idx_min, best_embedding_dist = min(enumerate(distances), key=lambda pair: pair[1])
         best_embedding = embeddings_all[idx_min]
 
         end_time = time.time()
@@ -232,12 +233,12 @@ with open(log_path, 'w') as log_file:
 
         log_file.write(
             f'Compute embedding with min. dist. of {best_embedding_dist}: '
-            f'{time_calculate_distance: .3g} s.'
+            f'{time_calculate_distance:.3g} s.\n\n'
         )
         if verbose:
             print(
                 f'Calculated embedding with min. distance of {best_embedding_dist} in '
-                f'{time_calculate_distance: .3g} s.'
+                f'{time_calculate_distance:.3g} s.'
             )
             print()
 
@@ -247,12 +248,10 @@ with open(log_path, 'w') as log_file:
         time_calculate_distance_total += time_calculate_distance
         time_find_min_distance_total += time_find_min_distance
 
-
-total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total +\
+total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total + \
                  time_find_min_distance_total
 
 if verbose:
-
     def format_time(seconds):
         return str(
             datetime.timedelta(seconds=round(seconds))
