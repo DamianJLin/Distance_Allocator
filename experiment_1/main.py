@@ -283,7 +283,7 @@ with open(log_path, 'w') as log_file:
                     u_embedded = ag.vertex(emb[u_allocated])
                     v_embedded = ag.vertex(emb[v_allocated])
                     # Find the distance between the u and v in ag when embedded via emb.
-                    dist_cuml = dc.distance(
+                    dist_cuml += dc.distance(
                         u_embedded,
                         v_embedded
                     )
