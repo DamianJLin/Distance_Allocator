@@ -1,279 +1,553 @@
-2022-02-02 23:04:51.864030
+2022-02-06 23:48:16.079129
 
 
 Architecture: AG_Tokyo, Circuit: 0410184_169
-Compute initial circuit:  2.21 s.
-|V| = 13,
-|E| = 13.
-Graphic at output/AG_Tokyo_0410184_169.png.
-Compute 1000 embeddings:  0.00544 s.Compute embedding with min. dist. of 154:  0.134 s.Architecture: AG_Tokyo, Circuit: 3_17_13
-Compute initial circuit:  0.000184 s.
+Compute initial circuit: 0.0886 s.
+|V| = 14,
+|E| = 18.
+Graphic at output/AG_Tokyo__0410184_169__initial_embedding.png.
+Compute 1000 embeddings: 0.0271 s.Min. dist.: 110
+No. gates.: 104
+Min. dist. /gate: 1.06
+Time: 0.63 s.
+
+Architecture: AG_Tokyo, Circuit: 3_17_13
+Compute initial circuit: 0.00159 s.
 |V| = 3,
-|E| = 2.
-Graphic at output/AG_Tokyo_3_17_13.png.
-Compute 316 embeddings:  0.00192 s.Compute embedding with min. dist. of 22:  0.00814 s.Architecture: AG_Tokyo, Circuit: 4_49_16
-Compute initial circuit:  0.00378 s.
+|E| = 3.
+Graphic at output/AG_Tokyo__3_17_13__initial_embedding.png.
+Compute 144 embeddings: 0.00162 s.Min. dist.: 17
+No. gates.: 17
+Min. dist. /gate: 1
+Time: 0.0172 s.
+
+Architecture: AG_Tokyo, Circuit: 4_49_16
+Compute initial circuit: 0.00346 s.
 |V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_4_49_16.png.
-Compute 1000 embeddings:  0.00476 s.Compute embedding with min. dist. of 188:  0.138 s.Architecture: AG_Tokyo, Circuit: 4gt10-v1_81
-Compute initial circuit:  0.00327 s.
-|V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_4gt10-v1_81.png.
-Compute 1000 embeddings:  0.00529 s.Compute embedding with min. dist. of 125:  0.0905 s.Architecture: AG_Tokyo, Circuit: 4gt11_82
-Compute initial circuit:  9.73e-05 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt11_82.png.
-Compute 86 embeddings:  0.000952 s.Compute embedding with min. dist. of 2:  0.000573 s.Architecture: AG_Tokyo, Circuit: 4gt11_83
-Compute initial circuit:  0.000123 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt11_83.png.
-Compute 86 embeddings:  0.000557 s.Compute embedding with min. dist. of 2:  0.000623 s.Architecture: AG_Tokyo, Circuit: 4gt11_84
-Compute initial circuit:  0.000199 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4gt11_84.png.
-Compute 144 embeddings:  0.00085 s.Compute embedding with min. dist. of 9:  0.00184 s.Architecture: AG_Tokyo, Circuit: 4gt12-v0_86
-Compute initial circuit:  0.000103 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt12-v0_86.png.
-Compute 86 embeddings:  0.000585 s.Compute embedding with min. dist. of 8:  0.00206 s.Architecture: AG_Tokyo, Circuit: 4gt12-v0_87
-Compute initial circuit:  9.2e-05 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt12-v0_87.png.
-Compute 86 embeddings:  0.000467 s.Compute embedding with min. dist. of 8:  0.00211 s.Architecture: AG_Tokyo, Circuit: 4gt12-v0_88
-Compute initial circuit:  0.000188 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4gt12-v0_88.png.
-Compute 144 embeddings:  0.000859 s.Compute embedding with min. dist. of 34:  0.00608 s.Architecture: AG_Tokyo, Circuit: 4gt12-v1_89
-Compute initial circuit:  0.000696 s.
-|V| = 5,
-|E| = 5.
-Graphic at output/AG_Tokyo_4gt12-v1_89.png.
-Compute 1000 embeddings:  0.00475 s.Compute embedding with min. dist. of 188:  0.122 s.Architecture: AG_Tokyo, Circuit: 4gt13-v1_93
-Compute initial circuit:  0.000746 s.
-|V| = 4,
-|E| = 2.
-Graphic at output/AG_Tokyo_4gt13-v1_93.png.
-Compute 1000 embeddings:  0.0334 s.Compute embedding with min. dist. of 32:  0.0292 s.Architecture: AG_Tokyo, Circuit: 4gt13_90
-Compute initial circuit:  0.000118 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt13_90.png.
-Compute 86 embeddings:  0.000972 s.Compute embedding with min. dist. of 8:  0.00155 s.Architecture: AG_Tokyo, Circuit: 4gt13_91
-Compute initial circuit:  8.85e-05 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt13_91.png.
-Compute 86 embeddings:  0.000456 s.Compute embedding with min. dist. of 8:  0.0015 s.Architecture: AG_Tokyo, Circuit: 4gt13_92
-Compute initial circuit:  0.00314 s.
-|V| = 5,
-|E| = 3.
-Graphic at output/AG_Tokyo_4gt13_92.png.
-Compute 1000 embeddings:  0.00416 s.Compute embedding with min. dist. of 40:  0.042 s.Architecture: AG_Tokyo, Circuit: 4gt4-v0_72
-Compute initial circuit:  0.000355 s.
-|V| = 4,
-|E| = 4.
-Graphic at output/AG_Tokyo_4gt4-v0_72.png.
-Compute 420 embeddings:  0.00286 s.Compute embedding with min. dist. of 65:  0.0223 s.Architecture: AG_Tokyo, Circuit: 4gt4-v0_73
-Compute initial circuit:  0.000166 s.
-|V| = 3,
-|E| = 2.
-Graphic at output/AG_Tokyo_4gt4-v0_73.png.
-Compute 316 embeddings:  0.00163 s.Compute embedding with min. dist. of 38:  0.0215 s.Architecture: AG_Tokyo, Circuit: 4gt4-v0_78
-Compute initial circuit:  9.94e-05 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt4-v0_78.png.
-Compute 86 embeddings:  0.000688 s.Compute embedding with min. dist. of 8:  0.00186 s.Architecture: AG_Tokyo, Circuit: 4gt4-v0_79
-Compute initial circuit:  0.000108 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt4-v0_79.png.
-Compute 86 embeddings:  0.00056 s.Compute embedding with min. dist. of 8:  0.00195 s.Architecture: AG_Tokyo, Circuit: 4gt4-v0_80
-Compute initial circuit:  0.000205 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4gt4-v0_80.png.
-Compute 144 embeddings:  0.000815 s.Compute embedding with min. dist. of 33:  0.00489 s.Architecture: AG_Tokyo, Circuit: 4gt4-v1_74
-Compute initial circuit:  0.000198 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4gt4-v1_74.png.
-Compute 144 embeddings:  0.000842 s.Compute embedding with min. dist. of 32:  0.00707 s.Architecture: AG_Tokyo, Circuit: 4gt5_75
-Compute initial circuit:  0.000741 s.
-|V| = 4,
-|E| = 2.
-Graphic at output/AG_Tokyo_4gt5_75.png.
-Compute 1000 embeddings:  0.00561 s.Compute embedding with min. dist. of 39:  0.0336 s.Architecture: AG_Tokyo, Circuit: 4gt5_76
-Compute initial circuit:  0.000156 s.
-|V| = 3,
-|E| = 2.
-Graphic at output/AG_Tokyo_4gt5_76.png.
-Compute 316 embeddings:  0.00195 s.Compute embedding with min. dist. of 12:  0.00679 s.Architecture: AG_Tokyo, Circuit: 4gt5_77
-Compute initial circuit:  0.000103 s.
-|V| = 2,
-|E| = 1.
-Graphic at output/AG_Tokyo_4gt5_77.png.
-Compute 86 embeddings:  0.000613 s.Compute embedding with min. dist. of 10:  0.00176 s.Architecture: AG_Tokyo, Circuit: 4mod5-bdd_287
-Compute initial circuit:  0.000584 s.
-|V| = 5,
-|E| = 5.
-Graphic at output/AG_Tokyo_4mod5-bdd_287.png.
-Compute 984 embeddings:  0.00444 s.Compute embedding with min. dist. of 22:  0.0186 s.Architecture: AG_Tokyo, Circuit: 4mod5-v0_18
-Compute initial circuit:  0.000201 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4mod5-v0_18.png.
-Compute 144 embeddings:  0.00139 s.Compute embedding with min. dist. of 15:  0.00288 s.Architecture: AG_Tokyo, Circuit: 4mod5-v0_19
-Compute initial circuit:  0.000366 s.
-|V| = 4,
-|E| = 4.
-Graphic at output/AG_Tokyo_4mod5-v0_19.png.
-Compute 420 embeddings:  0.0022 s.Compute embedding with min. dist. of 14:  0.00708 s.Architecture: AG_Tokyo, Circuit: 4mod5-v0_20
-Compute initial circuit:  0.000196 s.
-|V| = 4,
-|E| = 3.
-Graphic at output/AG_Tokyo_4mod5-v0_20.png.
-Compute 1000 embeddings:  0.0043 s.Compute embedding with min. dist. of 10:  0.00931 s.Architecture: AG_Tokyo, Circuit: 4mod5-v1_22
-Compute initial circuit:  0.000386 s.
-|V| = 5,
-|E| = 5.
-Graphic at output/AG_Tokyo_4mod5-v1_22.png.
-Compute 1000 embeddings:  0.00522 s.Compute embedding with min. dist. of 21:  0.0158 s.Architecture: AG_Tokyo, Circuit: 4mod5-v1_23
-Compute initial circuit:  0.000201 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4mod5-v1_23.png.
-Compute 144 embeddings:  0.00129 s.Compute embedding with min. dist. of 18:  0.00386 s.Architecture: AG_Tokyo, Circuit: 4mod5-v1_24
-Compute initial circuit:  0.00375 s.
-|V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_4mod5-v1_24.png.
-Compute 1000 embeddings:  0.00858 s.Compute embedding with min. dist. of 33:  0.0239 s.Architecture: AG_Tokyo, Circuit: 4mod7-v0_94
-Compute initial circuit:  0.00322 s.
-|V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_4mod7-v0_94.png.
-Compute 1000 embeddings:  0.00492 s.Compute embedding with min. dist. of 138:  0.1 s.Architecture: AG_Tokyo, Circuit: 4mod7-v1_96
-Compute initial circuit:  0.000199 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_4mod7-v1_96.png.
-Compute 144 embeddings:  0.00161 s.Compute embedding with min. dist. of 42:  0.00693 s.Architecture: AG_Tokyo, Circuit: 9symml_195
-Compute initial circuit:  6.12 s.
-|V| = 9,
 |E| = 6.
-Graphic at output/AG_Tokyo_9symml_195.png.
-Compute 1000 embeddings:  0.00476 s.Compute embedding with min. dist. of 21884:  17.2 s.Architecture: AG_Tokyo, Circuit: adr4_197
-Compute initial circuit:  0.00338 s.
+Graphic at output/AG_Tokyo__4_49_16__initial_embedding.png.
+Compute 432 embeddings: 0.00269 s.Min. dist.: 135
+No. gates.: 99
+Min. dist. /gate: 1.36
+Time: 0.256 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt10-v1_81
+Compute initial circuit: 0.00402 s.
 |V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt10-v1_81__initial_embedding.png.
+Compute 432 embeddings: 0.0349 s.Min. dist.: 88
+No. gates.: 66
+Min. dist. /gate: 1.33
+Time: 0.175 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_82
+Compute initial circuit: 0.00206 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt11_82__initial_embedding.png.
+Compute 68 embeddings: 0.00127 s.Min. dist.: 19
+No. gates.: 18
+Min. dist. /gate: 1.06
+Time: 0.0104 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_83
+Compute initial circuit: 0.00134 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt11_83__initial_embedding.png.
+Compute 68 embeddings: 0.0011 s.Min. dist.: 14
+No. gates.: 14
+Min. dist. /gate: 1
+Time: 0.0086 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt11_84
+Compute initial circuit: 0.000923 s.
+|V| = 4,
 |E| = 4.
-Graphic at output/AG_Tokyo_adr4_197.png.
-Compute 1000 embeddings:  0.0363 s.Compute embedding with min. dist. of 694:  0.711 s.Architecture: AG_Tokyo, Circuit: aj-e11_165
-Compute initial circuit:  0.000218 s.
-|V| = 4,
-|E| = 3.
-Graphic at output/AG_Tokyo_aj-e11_165.png.
-Compute 1000 embeddings:  0.00612 s.Compute embedding with min. dist. of 77:  0.0745 s.Architecture: AG_Tokyo, Circuit: alu-bdd_288
-Compute initial circuit:  0.00937 s.
+Graphic at output/AG_Tokyo__4gt11_84__initial_embedding.png.
+Compute 420 embeddings: 0.00259 s.Min. dist.: 9
+No. gates.: 9
+Min. dist. /gate: 1
+Time: 0.0257 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_86
+Compute initial circuit: 0.0101 s.
 |V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt12-v0_86__initial_embedding.png.
+Compute 432 embeddings: 0.00302 s.Min. dist.: 138
+No. gates.: 116
+Min. dist. /gate: 1.19
+Time: 0.318 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_87
+Compute initial circuit: 0.0104 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt12-v0_87__initial_embedding.png.
+Compute 432 embeddings: 0.00293 s.Min. dist.: 132
+No. gates.: 112
+Min. dist. /gate: 1.18
+Time: 0.3 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v0_88
+Compute initial circuit: 0.00362 s.
+|V| = 6,
+|E| = 7.
+Graphic at output/AG_Tokyo__4gt12-v0_88__initial_embedding.png.
+Compute 536 embeddings: 0.00377 s.Min. dist.: 110
+No. gates.: 86
+Min. dist. /gate: 1.28
+Time: 0.285 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt12-v1_89
+Compute initial circuit: 0.00162 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt12-v1_89__initial_embedding.png.
+Compute 68 embeddings: 0.00148 s.Min. dist.: 130
+No. gates.: 100
+Min. dist. /gate: 1.3
+Time: 0.0405 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt13-v1_93
+Compute initial circuit: 0.00303 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt13-v1_93__initial_embedding.png.
+Compute 432 embeddings: 0.00286 s.Min. dist.: 30
+No. gates.: 30
+Min. dist. /gate: 1
+Time: 0.0796 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_90
+Compute initial circuit: 0.00401 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt13_90__initial_embedding.png.
+Compute 432 embeddings: 0.00296 s.Min. dist.: 65
+No. gates.: 53
+Min. dist. /gate: 1.23
+Time: 0.153 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_91
+Compute initial circuit: 0.00429 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt13_91__initial_embedding.png.
+Compute 432 embeddings: 0.00297 s.Min. dist.: 59
+No. gates.: 49
+Min. dist. /gate: 1.2
+Time: 0.136 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt13_92
+Compute initial circuit: 0.00308 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt13_92__initial_embedding.png.
+Compute 432 embeddings: 0.0516 s.Min. dist.: 30
+No. gates.: 30
+Min. dist. /gate: 1
+Time: 0.0812 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_72
+Compute initial circuit: 0.00248 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt4-v0_72__initial_embedding.png.
+Compute 536 embeddings: 0.00356 s.Min. dist.: 164
+No. gates.: 113
+Min. dist. /gate: 1.45
+Time: 0.374 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_73
+Compute initial circuit: 0.00195 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt4-v0_73__initial_embedding.png.
+Compute 276 embeddings: 0.00247 s.Min. dist.: 98
+No. gates.: 179
+Min. dist. /gate: 0.547
+Time: 0.187 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_78
+Compute initial circuit: 0.0112 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt4-v0_78__initial_embedding.png.
+Compute 432 embeddings: 0.00281 s.Min. dist.: 132
+No. gates.: 109
+Min. dist. /gate: 1.21
+Time: 0.287 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_79
+Compute initial circuit: 0.0125 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt4-v0_79__initial_embedding.png.
+Compute 432 embeddings: 0.00306 s.Min. dist.: 126
+No. gates.: 105
+Min. dist. /gate: 1.2
+Time: 0.279 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v0_80
+Compute initial circuit: 0.00272 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt4-v0_80__initial_embedding.png.
+Compute 96 embeddings: 0.00216 s.Min. dist.: 103
+No. gates.: 79
+Min. dist. /gate: 1.3
+Time: 0.0486 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt4-v1_74
+Compute initial circuit: 0.00379 s.
+|V| = 6,
+|E| = 8.
+Graphic at output/AG_Tokyo__4gt4-v1_74__initial_embedding.png.
+Compute 432 embeddings: 0.00269 s.Min. dist.: 165
+No. gates.: 119
+Min. dist. /gate: 1.39
+Time: 0.33 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_75
+Compute initial circuit: 0.00176 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt5_75__initial_embedding.png.
+Compute 68 embeddings: 0.00136 s.Min. dist.: 50
+No. gates.: 38
+Min. dist. /gate: 1.32
+Time: 0.0191 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_76
+Compute initial circuit: 0.00166 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt5_76__initial_embedding.png.
+Compute 276 embeddings: 0.00222 s.Min. dist.: 51
+No. gates.: 46
+Min. dist. /gate: 1.11
+Time: 0.113 s.
+
+Architecture: AG_Tokyo, Circuit: 4gt5_77
+Compute initial circuit: 0.00508 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4gt5_77__initial_embedding.png.
+Compute 432 embeddings: 0.00294 s.Min. dist.: 68
+No. gates.: 58
+Min. dist. /gate: 1.17
+Time: 0.155 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-bdd_287
+Compute initial circuit: 0.00295 s.
+|V| = 7,
+|E| = 9.
+Graphic at output/AG_Tokyo__4mod5-bdd_287__initial_embedding.png.
+Compute 840 embeddings: 0.00568 s.Min. dist.: 36
+No. gates.: 31
+Min. dist. /gate: 1.16
+Time: 0.168 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_18
+Compute initial circuit: 0.00248 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod5-v0_18__initial_embedding.png.
+Compute 276 embeddings: 0.0027 s.Min. dist.: 39
+No. gates.: 31
+Min. dist. /gate: 1.26
+Time: 0.0574 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_19
+Compute initial circuit: 0.00156 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod5-v0_19__initial_embedding.png.
+Compute 276 embeddings: 0.00244 s.Min. dist.: 16
+No. gates.: 16
+Min. dist. /gate: 1
+Time: 0.0298 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v0_20
+Compute initial circuit: 0.00101 s.
+|V| = 5,
 |E| = 5.
-Graphic at output/AG_Tokyo_alu-bdd_288.png.
-Compute 1000 embeddings:  0.0053 s.Compute embedding with min. dist. of 66:  0.0457 s.Architecture: AG_Tokyo, Circuit: alu-v1_28
-Compute initial circuit:  0.000221 s.
+Graphic at output/AG_Tokyo__4mod5-v0_20__initial_embedding.png.
+Compute 1000 embeddings: 0.00579 s.Min. dist.: 10
+No. gates.: 10
+Min. dist. /gate: 1
+Time: 0.0637 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_22
+Compute initial circuit: 0.00116 s.
+|V| = 5,
+|E| = 5.
+Graphic at output/AG_Tokyo__4mod5-v1_22__initial_embedding.png.
+Compute 1000 embeddings: 0.00637 s.Min. dist.: 11
+No. gates.: 11
+Min. dist. /gate: 1
+Time: 0.07 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_23
+Compute initial circuit: 0.00216 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod5-v1_23__initial_embedding.png.
+Compute 276 embeddings: 0.00264 s.Min. dist.: 40
+No. gates.: 32
+Min. dist. /gate: 1.25
+Time: 0.0643 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod5-v1_24
+Compute initial circuit: 0.0017 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod5-v1_24__initial_embedding.png.
+Compute 276 embeddings: 0.00236 s.Min. dist.: 16
+No. gates.: 16
+Min. dist. /gate: 1
+Time: 0.0302 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod7-v0_94
+Compute initial circuit: 0.00791 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod7-v0_94__initial_embedding.png.
+Compute 432 embeddings: 0.00308 s.Min. dist.: 88
+No. gates.: 72
+Min. dist. /gate: 1.22
+Time: 0.199 s.
+
+Architecture: AG_Tokyo, Circuit: 4mod7-v1_96
+Compute initial circuit: 0.00231 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__4mod7-v1_96__initial_embedding.png.
+Compute 276 embeddings: 0.00272 s.Min. dist.: 92
+No. gates.: 72
+Min. dist. /gate: 1.28
+Time: 0.134 s.
+
+Architecture: AG_Tokyo, Circuit: 9symml_195
+Compute initial circuit: 0.0309 s.
+|V| = 11,
+|E| = 12.
+Graphic at output/AG_Tokyo__9symml_195__initial_embedding.png.
+Compute 1000 embeddings: 0.00862 s.Min. dist.: 22474
+No. gates.: 15232
+Min. dist. /gate: 1.48
+Time: 92.5 s.
+
+Architecture: AG_Tokyo, Circuit: adr4_197
+Compute initial circuit: 0.0207 s.
+|V| = 9,
+|E| = 11.
+Graphic at output/AG_Tokyo__adr4_197__initial_embedding.png.
+Compute 1000 embeddings: 0.00701 s.Min. dist.: 1821
+No. gates.: 1498
+Min. dist. /gate: 1.22
+Time: 8.11 s.
+
+Architecture: AG_Tokyo, Circuit: aj-e11_165
+Compute initial circuit: 0.00259 s.
+|V| = 5,
+|E| = 7.
+Graphic at output/AG_Tokyo__aj-e11_165__initial_embedding.png.
+Compute 276 embeddings: 0.00296 s.Min. dist.: 82
+No. gates.: 69
+Min. dist. /gate: 1.19
+Time: 0.119 s.
+
+Architecture: AG_Tokyo, Circuit: alu-bdd_288
+Compute initial circuit: 0.00341 s.
+|V| = 6,
+|E| = 7.
+Graphic at output/AG_Tokyo__alu-bdd_288__initial_embedding.png.
+Compute 984 embeddings: 0.007 s.Min. dist.: 38
+No. gates.: 38
+Min. dist. /gate: 1
+Time: 0.207 s.
+
+Architecture: AG_Tokyo, Circuit: alu-v1_28
+Compute initial circuit: 0.0018 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__alu-v1_28__initial_embedding.png.
+Compute 68 embeddings: 0.00167 s.Min. dist.: 20
+No. gates.: 18
+Min. dist. /gate: 1.11
+Time: 0.0113 s.
+
+Architecture: AG_Tokyo, Circuit: alu-v1_29
+Compute initial circuit: 0.00208 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__alu-v1_29__initial_embedding.png.
+Compute 68 embeddings: 0.00104 s.Min. dist.: 19
+No. gates.: 17
+Min. dist. /gate: 1.12
+Time: 0.00954 s.
+
+Architecture: AG_Tokyo, Circuit: cm82a_208
+Compute initial circuit: 0.00476 s.
+|V| = 8,
+|E| = 11.
+Graphic at output/AG_Tokyo__cm82a_208__initial_embedding.png.
+Compute 1000 embeddings: 0.0484 s.Min. dist.: 381
+No. gates.: 283
+Min. dist. /gate: 1.35
+Time: 1.75 s.
+
+Architecture: AG_Tokyo, Circuit: con1_216
+Compute initial circuit: 0.15 s.
+|V| = 9,
+|E| = 9.
+Graphic at output/AG_Tokyo__con1_216__initial_embedding.png.
+Compute 1000 embeddings: 0.00744 s.Min. dist.: 631
+No. gates.: 415
+Min. dist. /gate: 1.52
+Time: 2.53 s.
+
+Architecture: AG_Tokyo, Circuit: decod24-v0_38
+Compute initial circuit: 0.00228 s.
 |V| = 4,
-|E| = 3.
-Graphic at output/AG_Tokyo_alu-v1_28.png.
-Compute 1000 embeddings:  0.00509 s.Compute embedding with min. dist. of 22:  0.0177 s.Architecture: AG_Tokyo, Circuit: alu-v1_29
-Compute initial circuit:  0.000311 s.
-|V| = 4,
-|E| = 3.
-Graphic at output/AG_Tokyo_alu-v1_29.png.
-Compute 1000 embeddings:  0.00484 s.Compute embedding with min. dist. of 19:  0.0167 s.Architecture: AG_Tokyo, Circuit: cm82a_208
-Compute initial circuit:  0.00021 s.
+|E| = 5.
+Graphic at output/AG_Tokyo__decod24-v0_38__initial_embedding.png.
+Compute 144 embeddings: 0.00184 s.Min. dist.: 23
+No. gates.: 23
+Min. dist. /gate: 1
+Time: 0.0221 s.
+
+Architecture: AG_Tokyo, Circuit: ex-1_166
+Compute initial circuit: 0.000882 s.
 |V| = 3,
 |E| = 3.
-Graphic at output/AG_Tokyo_cm82a_208.png.
-Compute 144 embeddings:  0.00132 s.Compute embedding with min. dist. of 47:  0.00903 s.Architecture: AG_Tokyo, Circuit: con1_216
-Compute initial circuit:  0.0228 s.
+Graphic at output/AG_Tokyo__ex-1_166__initial_embedding.png.
+Compute 144 embeddings: 0.00107 s.Min. dist.: 9
+No. gates.: 9
+Min. dist. /gate: 1
+Time: 0.0103 s.
+
+Architecture: AG_Tokyo, Circuit: ham3_102
+Compute initial circuit: 0.0011 s.
+|V| = 3,
+|E| = 3.
+Graphic at output/AG_Tokyo__ham3_102__initial_embedding.png.
+Compute 144 embeddings: 0.00116 s.Min. dist.: 11
+No. gates.: 11
+Min. dist. /gate: 1
+Time: 0.0121 s.
+
+Architecture: AG_Tokyo, Circuit: hwb7_59
+Compute initial circuit: 0.012 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__hwb7_59__initial_embedding.png.
+Compute 276 embeddings: 0.00222 s.Min. dist.: 3395
+No. gates.: 10681
+Min. dist. /gate: 0.318
+Time: 6.32 s.
+
+Architecture: AG_Tokyo, Circuit: hwb8_113
+Compute initial circuit: 0.0318 s.
+|V| = 8,
+|E| = 11.
+Graphic at output/AG_Tokyo__hwb8_113__initial_embedding.png.
+Compute 224 embeddings: 0.00456 s.Min. dist.: 38191
+No. gates.: 30372
+Min. dist. /gate: 1.26
+Time: 34.4 s.
+
+Architecture: AG_Tokyo, Circuit: mlp4_245
+Compute initial circuit: 0.0467 s.
+|V| = 9,
+|E| = 11.
+Graphic at output/AG_Tokyo__mlp4_245__initial_embedding.png.
+Compute 1000 embeddings: 0.024 s.Min. dist.: 6769
+No. gates.: 8232
+Min. dist. /gate: 0.822
+Time: 27.1 s.
+
+Architecture: AG_Tokyo, Circuit: mod10_171
+Compute initial circuit: 0.00177 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__mod10_171__initial_embedding.png.
+Compute 68 embeddings: 0.0024 s.Min. dist.: 150
+No. gates.: 108
+Min. dist. /gate: 1.39
+Time: 0.0489 s.
+
+Architecture: AG_Tokyo, Circuit: one-two-three-v0_98
+Compute initial circuit: 0.00233 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__one-two-three-v0_98__initial_embedding.png.
+Compute 432 embeddings: 0.00273 s.Min. dist.: 89
+No. gates.: 65
+Min. dist. /gate: 1.37
+Time: 0.177 s.
+
+Architecture: AG_Tokyo, Circuit: one-two-three-v3_101
+Compute initial circuit: 0.00241 s.
+|V| = 5,
+|E| = 6.
+Graphic at output/AG_Tokyo__one-two-three-v3_101__initial_embedding.png.
+Compute 276 embeddings: 0.00256 s.Min. dist.: 34
+No. gates.: 32
+Min. dist. /gate: 1.06
+Time: 0.0584 s.
+
+Architecture: AG_Tokyo, Circuit: rd53_130
+Compute initial circuit: 0.0312 s.
 |V| = 7,
 |E| = 7.
-Graphic at output/AG_Tokyo_con1_216.png.
-Compute 1000 embeddings:  0.0066 s.Compute embedding with min. dist. of 474:  0.32 s.Architecture: AG_Tokyo, Circuit: decod24-v0_38
-Compute initial circuit:  0.000208 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_decod24-v0_38.png.
-Compute 144 embeddings:  0.00131 s.Compute embedding with min. dist. of 24:  0.00415 s.Architecture: AG_Tokyo, Circuit: ex-1_166
-Compute initial circuit:  0.000198 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_ex-1_166.png.
-Compute 144 embeddings:  0.000781 s.Compute embedding with min. dist. of 11:  0.0022 s.Architecture: AG_Tokyo, Circuit: ham3_102
-Compute initial circuit:  0.000256 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_ham3_102.png.
-Compute 144 embeddings:  0.000808 s.Compute embedding with min. dist. of 14:  0.00283 s.Architecture: AG_Tokyo, Circuit: hwb7_59
-Compute initial circuit:  0.000465 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_hwb7_59.png.
-Compute 144 embeddings:  0.000807 s.Compute embedding with min. dist. of 1388:  0.31 s.Architecture: AG_Tokyo, Circuit: hwb8_113
-Compute initial circuit:  0.00502 s.
-|V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_hwb8_113.png.
-Compute 1000 embeddings:  0.00472 s.Compute embedding with min. dist. of 15954:  14 s.Architecture: AG_Tokyo, Circuit: mlp4_245
-Compute initial circuit:  0.00976 s.
-|V| = 6,
-|E| = 6.
-Graphic at output/AG_Tokyo_mlp4_245.png.
-Compute 1000 embeddings:  0.00513 s.Compute embedding with min. dist. of 2790:  2.48 s.Architecture: AG_Tokyo, Circuit: mod10_171
-Compute initial circuit:  0.000768 s.
-|V| = 5,
-|E| = 5.
-Graphic at output/AG_Tokyo_mod10_171.png.
-Compute 1000 embeddings:  0.00521 s.Compute embedding with min. dist. of 229:  0.15 s.Architecture: AG_Tokyo, Circuit: one-two-three-v0_98
-Compute initial circuit:  0.00446 s.
-|V| = 5,
-|E| = 3.
-Graphic at output/AG_Tokyo_one-two-three-v0_98.png.
-Compute 1000 embeddings:  0.00483 s.Compute embedding with min. dist. of 122:  0.0898 s.Architecture: AG_Tokyo, Circuit: one-two-three-v3_101
-Compute initial circuit:  0.000751 s.
-|V| = 5,
-|E| = 5.
-Graphic at output/AG_Tokyo_one-two-three-v3_101.png.
-Compute 1000 embeddings:  0.00527 s.Compute embedding with min. dist. of 67:  0.0456 s.Architecture: AG_Tokyo, Circuit: rd53_130
-Compute initial circuit:  0.00309 s.
-|V| = 5,
-|E| = 4.
-Graphic at output/AG_Tokyo_rd53_130.png.
-Compute 1000 embeddings:  0.00484 s.Compute embedding with min. dist. of 431:  0.335 s.Architecture: AG_Tokyo, Circuit: rd53_131
-Compute initial circuit:  0.154 s.
+Graphic at output/AG_Tokyo__rd53_130__initial_embedding.png.
+Compute 1000 embeddings: 0.00843 s.Min. dist.: 605
+No. gates.: 448
+Min. dist. /gate: 1.35
+Time: 2.73 s.
+
+Architecture: AG_Tokyo, Circuit: rd53_131
+Compute initial circuit: 0.00713 s.
 |V| = 7,
-|E| = 5.
-Graphic at output/AG_Tokyo_rd53_131.png.
-Compute 1000 embeddings:  0.00501 s.Compute embedding with min. dist. of 404:  0.271 s.Architecture: AG_Tokyo, Circuit: sym9_148
-Compute initial circuit:  0.158 s.
+|E| = 9.
+Graphic at output/AG_Tokyo__rd53_131__initial_embedding.png.
+Compute 1000 embeddings: 0.0494 s.Min. dist.: 274
+No. gates.: 200
+Min. dist. /gate: 1.37
+Time: 1.23 s.
+
+Architecture: AG_Tokyo, Circuit: sym9_148
+Compute initial circuit: 0.0241 s.
 |V| = 7,
-|E| = 5.
-Graphic at output/AG_Tokyo_sym9_148.png.
-Compute 1000 embeddings:  0.0337 s.Compute embedding with min. dist. of 14782:  10.2 s.Architecture: AG_Tokyo, Circuit: sym9_193
-Compute initial circuit:  5.77 s.
+|E| = 10.
+Graphic at output/AG_Tokyo__sym9_148__initial_embedding.png.
+Compute 112 embeddings: 0.00298 s.Min. dist.: 11490
+No. gates.: 9408
+Min. dist. /gate: 1.22
+Time: 5.05 s.
+
+Architecture: AG_Tokyo, Circuit: sym9_193
+Compute initial circuit: 0.0308 s.
+|V| = 11,
+|E| = 12.
+Graphic at output/AG_Tokyo__sym9_193__initial_embedding.png.
+Compute 1000 embeddings: 0.00824 s.Min. dist.: 22474
+No. gates.: 15232
+Min. dist. /gate: 1.48
+Time: 93.5 s.
+
+Architecture: AG_Tokyo, Circuit: sys6-v0_111
+Compute initial circuit: 0.028 s.
 |V| = 9,
-|E| = 6.
-Graphic at output/AG_Tokyo_sym9_193.png.
-Compute 1000 embeddings:  0.0053 s.Compute embedding with min. dist. of 21884:  17.3 s.Architecture: AG_Tokyo, Circuit: sys6-v0_111
-Compute initial circuit:  0.000221 s.
-|V| = 3,
-|E| = 3.
-Graphic at output/AG_Tokyo_sys6-v0_111.png.
-Compute 144 embeddings:  0.00139 s.Compute embedding with min. dist. of 14:  0.00353 s.
+|E| = 12.
+Graphic at output/AG_Tokyo__sys6-v0_111__initial_embedding.png.
+Compute 1000 embeddings: 0.00708 s.Min. dist.: 107
+No. gates.: 98
+Min. dist. /gate: 1.09
+Time: 0.517 s.
+
