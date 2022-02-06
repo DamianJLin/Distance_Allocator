@@ -5,8 +5,9 @@ import itertools
 import datetime
 import time
 import numpy as np
-import graph_tool.all as gt
+import pandas as pd
 import matplotlib.pyplot as plt
+import graph_tool.all as gt
 from lib.utils import NoSubgraphIsomorphism, get_layer, save_embedding_image
 from lib.distance_calculator import DistanceCalculator
 from termcolor import colored
@@ -26,6 +27,7 @@ Terminology:
     Embedded Qubit:
     An embedded qubit is a vertex of the graph ag (the architecture graph). In the literature this would be called a
     physical qubit.
+    
 """
 
 ag_dir = Path(__file__).resolve().parent / 'arch_graphs'
@@ -47,6 +49,16 @@ if '-v' in sys.argv or '--verbose' in sys.argv:
 
 # Number of embeddings.
 n_embeddings = 1000
+if '-e' in sys.argv:
+    if len(sys.argv) < sys.argv.index('-e') + 2:
+        raise ValueError('-e flag needs an argument.')
+    n_embeddings = None
+    try:
+        n_embeddings = int(sys.argv[sys.argv.index('-e') + 1])
+    except ValueError:
+        raise ValueError('-e flag argument must be integer.')
+assert isinstance(n_embeddings, int)
+
 
 # Clear log path.
 for path in out_dir.iterdir():
@@ -55,28 +67,23 @@ for path in out_dir.iterdir():
 # Keep track of time spent.
 time_initial_circuit_total = 0.0
 time_find_embeddings_total = 0.0
-time_calculate_distance_total = 0.0
+time_calculate_min_dist_total = 0.0
 time_find_min_distance_total = 0.0
 
 # Create log file and keep it open.
-log_path = out_dir / 'experiment.log'
-log_path.touch(exist_ok=True)
-with open(log_path, 'w') as log_file:
-    log_file.write(
-        str(datetime.datetime.now()) + '\n\n\n'
-    )
+log_path = out_dir / 'log.csv'
+make_header = True
+with open(log_path, 'a') as log_file:
 
     # Loop through all combinations of architectures and circuits.
-    for ag_path, circ_path in itertools.product(ag_paths, circ_paths):
+    for comb_index, (ag_path, circ_path) in enumerate(itertools.product(ag_paths, circ_paths)):
 
-        # Print and write to the log file.
+        # Write to log dict.
+        log_data = {}
         print(
-            f'Starting allocation for architecture {colored(str(ag_path.stem).rstrip(".graphml"), "blue")}, '
-            f'circuit {colored(str(circ_path.stem).rstrip(".qasm.txt"), "blue")}...'
-        )
-        log_file.write(
-            f'Architecture: {str(ag_path.stem).rstrip(".graphml")}, '
-            f'Circuit: {str(circ_path.stem).rstrip(".qasm.txt")}\n'
+            f'Allocating architecture: {colored(str(ag_path.stem).rstrip(".graphml"), "blue")}, '
+            f'circuit {colored(str(circ_path.stem).rstrip(".qasm.txt"), "blue")}...',
+            flush=True
         )
 
         # Initialise architecture graph.
@@ -104,7 +111,7 @@ with open(log_path, 'w') as log_file:
         embeddings_init = None
 
         if verbose:
-            print('Finding initial subcircuit...')
+            print('Finding initial subcircuit... ', end='', flush=True)
 
         start_time = time.time()
 
@@ -207,7 +214,6 @@ with open(log_path, 'w') as log_file:
         time_initial_circuit = end_time - start_time
 
         # Logging, printing, saving image to file.
-        log_file.write(f'Compute initial circuit: {time_initial_circuit:.3g} s.\n')
         if embeddings_init:
             img_path = out_dir / (
                     str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
@@ -220,29 +226,25 @@ with open(log_path, 'w') as log_file:
                 mapping=embeddings_init[0],
                 location=img_path,
             )
-            log_file.write(
-                f'|V| = {sub.num_vertices(ignore_filter=True)},\n'
-                f'|E| = {sub.num_edges(ignore_filter=True)}.\n'
-            )
-            log_file.write(
-                f'Graphic at {img_path.parent.name}/{img_path.name}.\n'
-            )
+            log_data['num_vertices'] = sub.num_vertices(ignore_filter=True)
+            log_data['num_edges'] = sub.num_vertices(ignore_filter=True)
+            log_data['init_subcircuit_time'] = f'{time_initial_circuit:.3g} s'
             if verbose:
+                print('done.', flush=True)
                 print(
-                    f'Initial subcircuit found with |V| = {sub.num_vertices(ignore_filter=True)}, '
-                    f'|E| = {sub.num_edges(ignore_filter=True)} in {time_initial_circuit:.3g} s.'
+                    f'\t# Vertices: {sub.num_vertices(ignore_filter=True)},\n'
+                    f'\t# Edges: {sub.num_edges(ignore_filter=True)}\n'
+                    f'\tTime: {time_initial_circuit:.3g} s.',
+                    flush=True
                 )
 
         else:
-            log_file.write(
-                f'No initial subcircuit was found. Possible error.\n'
-            )
             if verbose:
-                print('Failed to find initial subcircuit.')
+                print('failed.', flush=True)
             sys.exit(0)
 
         if verbose:
-            print('Finding alternative embeddings of initial circuit...')
+            print('Finding alternative embeddings of initial circuit... ', end='', flush=True)
 
         start_time = time.time()
 
@@ -254,9 +256,15 @@ with open(log_path, 'w') as log_file:
         end_time = time.time()
         time_find_embeddings = end_time - start_time
 
-        log_file.write(f'Compute {len(embeddings_all)} embeddings: {time_find_embeddings:.3g} s.')
+        log_data['num_embeddings'] = len(embeddings_all)
+        log_data['embeddings_time'] = f'{time_find_embeddings:.3g} s'
         if verbose:
-            print(f'Found {len(embeddings_all)} embeddings of initial circuit in {time_find_embeddings:.3g} s.')
+            print('done.', flush=True)
+            print(
+                f'\t# Embeddings: {len(embeddings_all)}\n'
+                f'\tTime: {time_find_embeddings:.3g} s.',
+                flush=True
+            )
 
         # Initialize distance array with distances np.inf.
         distances = np.full_like(embeddings_all, np.inf)
@@ -265,7 +273,7 @@ with open(log_path, 'w') as log_file:
         dc = DistanceCalculator(ag)
 
         if verbose:
-            print(f'Calculating distance for each embedding and finding minimum...')
+            print(f'Calculating distance for each embedding and finding min... ', end='', flush=True)
 
         start_time = time.time()
 
@@ -289,13 +297,30 @@ with open(log_path, 'w') as log_file:
                     )
             distances[i] = dist_cuml
 
+        # Find embedding of minimum distance.
+        idx_min, best_embedding_dist = min(enumerate(distances), key=lambda pair: pair[1])
+        best_embedding = embeddings_all[idx_min]
+
         end_time = time.time()
-        time_calculate_distance = end_time - start_time
+        time_calculate_min_dist = end_time - start_time
+
+        log_data['best_dist'] = best_embedding_dist
+        log_data['num_gates'] = len(circuit)
+        log_data['best_dist_per_gate'] = best_embedding_dist / len(circuit)
+        log_data['best_dist_time'] = f'{time_calculate_min_dist:.3g} s'
+        if verbose:
+            print('done.', flush=True)
+            print(
+                f'\tMin. dist.: {best_embedding_dist}\n'
+                f'\tNo. gates.: {len(circuit)}\n'
+                f'\tMin. dist. per gate: {best_embedding_dist / len(circuit):.3g}\n'
+                f'\tTime: {time_calculate_min_dist:.3g} s.',
+                flush=True
+            )
 
         # Calculate dist histogram and save.
-        distances_avg = distances / len(circuit)
         fig, ax = plt.subplots()
-        ax.hist(distances_avg, n_embeddings // 50)
+        ax.hist(distances, n_embeddings // 25 + 1)
         hist_path = out_dir / (
                 str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
                 + '__' + 'dist_hist' + '.png'
@@ -307,38 +332,18 @@ with open(log_path, 'w') as log_file:
         )
         plt.close(fig)
 
-        start_time = time.time()
-
-        # Find embedding of minimum distance.
-        idx_min, best_embedding_dist = min(enumerate(distances), key=lambda pair: pair[1])
-        best_embedding = embeddings_all[idx_min]
-
-        end_time = time.time()
-        time_find_min_distance = end_time - start_time
-
-        log_file.write(
-            f'Min. dist.: {best_embedding_dist}\n'
-            f'No. gates.: {len(circuit)}\n'
-            f'Min. dist. /gate: {best_embedding_dist / len(circuit):.3g}\n'
-            f'Time: {time_calculate_distance:.3g} s.\n\n'
-        )
-        if verbose:
-            print(
-                f'Min. dist.: {best_embedding_dist} / '
-                f'No. gates.: {len(circuit)} = '
-                f'{best_embedding_dist / len(circuit):.3g} per gate,'
-                f'taking: {time_calculate_distance:.3g} s.\n\n'
-            )
-            print()
-
         # Add time spent.
         time_initial_circuit_total += time_initial_circuit
         time_find_embeddings_total += time_find_embeddings
-        time_calculate_distance_total += time_calculate_distance
-        time_find_min_distance_total += time_find_min_distance
+        time_calculate_min_dist_total += time_calculate_min_dist
 
-total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total \
-                 + time_find_min_distance_total
+        log_frame = pd.DataFrame(log_data, index=[comb_index])
+        log_frame.to_csv(log_file, header=make_header)
+        make_header = False
+        if verbose:
+            print(flush=True)
+
+total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_min_dist_total
 
 if verbose:
     def format_time(seconds):
@@ -358,11 +363,7 @@ if verbose:
     )
     print(
         f'\tComputing distance for all embeddings: \t\t'
-        f'{format_time(time_calculate_distance_total)}'
-    )
-    print(
-        f'\tFinding embedding with minimum distance: \t'
-        f'{format_time(time_find_min_distance)}'
+        f'{format_time(time_calculate_min_dist_total)}'
     )
 
     print()
