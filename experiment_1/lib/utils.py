@@ -1,14 +1,8 @@
+import pathlib
 import graph_tool.all as gt
 
 
-class NoSubgraphIsomorphism(Exception):
-    """
-    Custom exception raised when no isomorphic subgraph found.
-    """
-    pass
-
-
-def layer(circuit, mask, logical_qubits):
+def get_layer(circuit, mask, logical_qubits):
     """
     Generates circuit[0] then all the gates (edges) in the top layer of circuit (all gates that can be run
     parallel to circuit[0]).
@@ -41,9 +35,16 @@ def layer(circuit, mask, logical_qubits):
     return
 
 
-def save_embedding_image(subgraph, graph, mapping, location):
+def save_embedding_image(
+        subgraph: gt.Graph,
+        graph: gt.Graph,
+        mapping: gt.VertexPropertyMap,
+        location: pathlib.Path | type(None),
+        log_to_alloc: dict
+):
     """
     Save image of subgraph embedded in graph with mapping at location.
+    :param log_to_alloc: Map from logical vertex (int) to allocated vertex in sub.
     :param subgraph: Subgraph
     :param graph: Graph
     :param mapping: Map from Subgraph to graph.
@@ -52,9 +53,41 @@ def save_embedding_image(subgraph, graph, mapping, location):
     """
     vmask, emask = gt.mark_subgraph(graph, subgraph, mapping)
 
+    # Setting the vertex text labels.
+    label_on_sub = subgraph.new_vertex_property('string')
+    for log, phys in log_to_alloc.items():
+        label_on_sub[phys] = log
+    label_on_graph = graph.new_vertex_property('string')
+    for s in subgraph.vertices():
+        label_on_graph[graph.vertex(mapping[s])] = label_on_sub[s]
+
+    # Setting the position vertex property. Tailored to QTokyo only.
+    def pos(n):
+        y = n // 5
+        x = n % 5
+        return x, y
+
+    display_pos = graph.new_vertex_property('vector<float>')
+    for v in graph.vertices():
+        display_pos[v] = pos(graph.vertex_index[v])
+
+    if location is not None:
+        output_path = str(location)  # Save as file.
+    else:
+        output_path = None  # Interactive window.
+
     gt.graph_draw(
         graph,
+        pos=display_pos,
+        vertex_text=label_on_graph,
         vertex_fill_color=vmask,
         edge_color=emask,
-        output=str(location)
+        output=output_path
     )
+
+
+class NoSubgraphIsomorphism(Exception):
+    """
+    Custom exception raised when no isomorphic subgraph found.
+    """
+    pass

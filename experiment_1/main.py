@@ -6,9 +6,27 @@ import datetime
 import time
 import numpy as np
 import graph_tool.all as gt
-from lib.utils import NoSubgraphIsomorphism, layer, save_embedding_image
+import matplotlib.pyplot as plt
+from lib.utils import NoSubgraphIsomorphism, get_layer, save_embedding_image
 from lib.distance_calculator import DistanceCalculator
 from termcolor import colored
+
+"""
+Terminology:
+============
+
+    Logical Qubit:
+    A qubit in a quantum circuit. They are represented by integers.
+    
+    Allocated Qubit:
+    A vertex of the subgraph sub. However there are many possible embeddings of this subgraph into the architecture
+    graph, chosen from only when this qubit becomes and embedded qubit. (This is neither a logical qubit and a physical
+    qubit, but sits in between these definitions.)
+    
+    Embedded Qubit:
+    An embedded qubit is a vertex of the graph ag (the architecture graph). In the literature this would be called a
+    physical qubit.
+"""
 
 ag_dir = Path(__file__).resolve().parent / 'arch_graphs'
 circ_dir = Path(__file__).resolve().parent / 'circuits'
@@ -21,10 +39,14 @@ circ_paths = sorted(list(
     circ_dir.glob('*.qasm.txt')
 ))
 
+# Script parameters.
 # Set verbosity.
 verbose = False
 if '-v' in sys.argv or '--verbose' in sys.argv:
     verbose = True
+
+# Number of embeddings.
+n_embeddings = 1000
 
 # Clear log path.
 for path in out_dir.iterdir():
@@ -66,7 +88,7 @@ with open(log_path, 'w') as log_file:
         pattern = r'\[?\[(\d*), (\d*)\]\]?'
         circuit = np.asarray(
             [
-                list(map(int, tup))
+                np.asarray(list(map(int, tup)))
                 for tup in re.findall(pattern, circ_str)
             ]
         )
@@ -79,7 +101,7 @@ with open(log_path, 'w') as log_file:
         sub = gt.Graph()
         sub.set_directed(False)
         sub.set_fast_edge_removal(fast=True)
-        embedding = None
+        embeddings_init = None
 
         if verbose:
             print('Finding initial subcircuit...')
@@ -93,9 +115,9 @@ with open(log_path, 'w') as log_file:
             logical_qubits.add(v)
 
         # Dictionary for the physical qubit (vertex in sub) a logical qubit (int) is allocated to.
-        physical_qubit = {}
+        logical_to_allocated = {}
 
-        allocated = np.zeros(len(circuit), dtype=bool)
+        gate_allocation = np.zeros(len(circuit), dtype=bool)
 
         # Below algorithm for finding initial subcircuit:
         # while layer_forbids_embedding is False:
@@ -112,72 +134,71 @@ with open(log_path, 'w') as log_file:
         layer_forbids_embedding = False
         while not layer_forbids_embedding:
 
-            # For every gate that is parallel to (in the same layer as) the first unallocated gate, check subgraph
-            # isomorphism to see if it is a candidate for inclusion.
             embedding_found_in_layer = False
-            for i, (u_logical, v_logical) in layer(circuit, mask=allocated, logical_qubits=logical_qubits):
-                u_allocated = bool(u_logical in physical_qubit)
-                v_allocated = bool(v_logical in physical_qubit)
+            for i, (u_log, v_log) in get_layer(circuit, mask=gate_allocation, logical_qubits=logical_qubits):
+                u_is_allocated = bool(u_log in logical_to_allocated)
+                v_is_allocated = bool(v_log in logical_to_allocated)
                 # u and v embedded
-                if u_allocated and v_allocated:
+                if u_is_allocated and v_is_allocated:
                     e = sub.add_edge(
-                        physical_qubit[u_logical],
-                        physical_qubit[v_logical]
+                        logical_to_allocated[u_log],
+                        logical_to_allocated[v_log]
                     )
                 # u embedded but v not
-                elif u_allocated and not v_allocated:
-                    physical_qubit[v_logical] = sub.add_vertex()
+                elif u_is_allocated and not v_is_allocated:
+                    logical_to_allocated[v_log] = sub.add_vertex()
                     e = sub.add_edge(
-                        physical_qubit[u_logical],
-                        physical_qubit[v_logical]
+                        logical_to_allocated[u_log],
+                        logical_to_allocated[v_log]
                     )
                 # u not embedded but v
-                elif not u_allocated and v_allocated:
-                    physical_qubit[u_logical] = sub.add_vertex()
+                elif not u_is_allocated and v_is_allocated:
+                    logical_to_allocated[u_log] = sub.add_vertex()
                     e = sub.add_edge(
-                        physical_qubit[u_logical],
-                        physical_qubit[v_logical]
+                        logical_to_allocated[u_log],
+                        logical_to_allocated[v_log]
                     )
                 # u nor v embedded
-                elif not u_allocated and not v_allocated:
-                    physical_qubit[u_logical] = sub.add_vertex()
-                    physical_qubit[v_logical] = sub.add_vertex()
+                elif not u_is_allocated and not v_is_allocated:
+                    logical_to_allocated[u_log] = sub.add_vertex()
+                    logical_to_allocated[v_log] = sub.add_vertex()
                     e = sub.add_edge(
-                        physical_qubit[u_logical],
-                        physical_qubit[v_logical]
+                        logical_to_allocated[u_log],
+                        logical_to_allocated[v_log]
                     )
                 gt.remove_parallel_edges(sub)
 
                 try:
-                    embedding_prev = embedding
-                    embedding = gt.subgraph_isomorphism(sub, ag, max_n=1, induced=False)
+                    prev = embeddings_init
+                    embeddings_init = gt.subgraph_isomorphism(sub, ag, max_n=1, induced=False)
 
-                    if embedding:
-                        allocated[i] = True
+                    if embeddings_init:
+                        gate_allocation[i] = True
                         embedding_found_in_layer = True
                         break
                     else:
                         raise NoSubgraphIsomorphism
 
-                # If no isomorphism was found, we need to clean up the added vertices and edges.
+                # If no isomorphism was found, we need to clean up the added vertices and edges and the physical_qubit
+                # dictionary.
                 except NoSubgraphIsomorphism:
-                    if u_allocated and v_allocated:
+                    if u_is_allocated and v_is_allocated:
                         sub.remove_edge(e)
-                    elif u_allocated and not v_allocated:
+                    elif u_is_allocated and not v_is_allocated:
                         sub.remove_edge(e)
-                        sub.remove_vertex(physical_qubit[v_logical])
-                        physical_qubit.pop(v_logical)
-                    elif not u_allocated and v_allocated:
+                        sub.remove_vertex(logical_to_allocated[v_log])
+                        logical_to_allocated.pop(v_log)
+                    elif not u_is_allocated and v_is_allocated:
                         sub.remove_edge(e)
-                        sub.remove_vertex(physical_qubit[u_logical])
-                        physical_qubit.pop(u_logical)
-                    elif not u_allocated and not v_allocated:
+                        sub.remove_vertex(logical_to_allocated[u_log])
+                        logical_to_allocated.pop(u_log)
+                    elif not u_is_allocated and not v_is_allocated:
                         sub.remove_edge(e)
-                        sub.remove_vertex(physical_qubit[v_logical])
-                        sub.remove_vertex(physical_qubit[u_logical])
-                        physical_qubit.pop(v_logical)
-                        physical_qubit.pop(u_logical)
-                    embedding = embedding_prev
+                        sub.remove_vertex(logical_to_allocated[v_log])
+                        sub.remove_vertex(logical_to_allocated[u_log])
+                        logical_to_allocated.pop(v_log)
+                        logical_to_allocated.pop(u_log)
+                    embeddings_init = prev
 
             if not embedding_found_in_layer:
                 layer_forbids_embedding = True
@@ -187,14 +208,16 @@ with open(log_path, 'w') as log_file:
 
         # Logging, printing, saving image to file.
         log_file.write(f'Compute initial circuit: {time_initial_circuit:.3g} s.\n')
-        if embedding:
+        if embeddings_init:
             img_path = out_dir / (
-                str(ag_path.stem).rstrip('.graphml') + '_' + str(circ_path.stem).rstrip('.qasm.txt') + '.png'
+                    str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
+                    + '__' + 'initial_embedding' + '.png'
             )
             save_embedding_image(
                 subgraph=sub,
+                log_to_alloc=logical_to_allocated,
                 graph=ag,
-                mapping=embedding[0],
+                mapping=embeddings_init[0],
                 location=img_path,
             )
             log_file.write(
@@ -216,7 +239,7 @@ with open(log_path, 'w') as log_file:
             )
             if verbose:
                 print('Failed to find initial subcircuit.')
-            continue  # Remaining algorithm is redundant.
+            sys.exit(0)
 
         if verbose:
             print('Finding alternative embeddings of initial circuit...')
@@ -224,7 +247,9 @@ with open(log_path, 'w') as log_file:
         start_time = time.time()
 
         # Find all embeddings.
-        embeddings_all = gt.subgraph_isomorphism(sub, ag, max_n=10, induced=False)
+        embeddings_all = np.asarray(
+            gt.subgraph_isomorphism(sub, ag, max_n=n_embeddings, induced=False)
+        )
 
         end_time = time.time()
         time_find_embeddings = end_time - start_time
@@ -233,8 +258,8 @@ with open(log_path, 'w') as log_file:
         if verbose:
             print(f'Found {len(embeddings_all)} embeddings of initial circuit in {time_find_embeddings:.3g} s.')
 
-        # Initialize distance list with distances np.inf.
-        distances = [np.inf for i, emb in enumerate(embeddings_all)]
+        # Initialize distance array with distances np.inf.
+        distances = np.full_like(embeddings_all, np.inf)
 
         # Initialise DistanceCalculator object for efficiency with repeated distance calls.
         dc = DistanceCalculator(ag)
@@ -249,17 +274,38 @@ with open(log_path, 'w') as log_file:
 
             dist_cuml = 0
 
-            for (u_qasm, v_qasm) in circuit:
-                if u_qasm in physical_qubit and v_qasm in physical_qubit:
-                    dist_cuml += dc.distance(
-                        physical_qubit[u_qasm],
-                        physical_qubit[v_qasm]
+            for (u_log, v_log) in circuit:
+                if u_log in logical_to_allocated and v_log in logical_to_allocated:
+                    # Find the allocation of u and v
+                    u_allocated = logical_to_allocated[u_log]
+                    v_allocated = logical_to_allocated[v_log]
+                    # Find the embedding of u and v
+                    u_embedded = ag.vertex(emb[u_allocated])
+                    v_embedded = ag.vertex(emb[v_allocated])
+                    # Find the distance between the u and v in ag when embedded via emb.
+                    dist_cuml = dc.distance(
+                        u_embedded,
+                        v_embedded
                     )
-
             distances[i] = dist_cuml
 
         end_time = time.time()
         time_calculate_distance = end_time - start_time
+
+        # Calculate dist histogram and save.
+        distances_avg = distances / len(circuit)
+        fig, ax = plt.subplots()
+        ax.hist(distances_avg, n_embeddings // 50)
+        hist_path = out_dir / (
+                str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
+                + '__' + 'dist_hist' + '.png'
+        )
+        fig.savefig(
+            fname=hist_path,
+            dpi='figure',
+            format='png'
+        )
+        plt.close(fig)
 
         start_time = time.time()
 
@@ -271,13 +317,17 @@ with open(log_path, 'w') as log_file:
         time_find_min_distance = end_time - start_time
 
         log_file.write(
-            f'Compute embedding with min. dist. of {best_embedding_dist}: '
-            f'{time_calculate_distance:.3g} s.\n\n'
+            f'Min. dist.: {best_embedding_dist}\n'
+            f'No. gates.: {len(circuit)}\n'
+            f'Min. dist. /gate: {best_embedding_dist / len(circuit):.3g}\n'
+            f'Time: {time_calculate_distance:.3g} s.\n\n'
         )
         if verbose:
             print(
-                f'Calculated embedding with min. distance of {best_embedding_dist} in '
-                f'{time_calculate_distance:.3g} s.'
+                f'Min. dist.: {best_embedding_dist} / '
+                f'No. gates.: {len(circuit)} = '
+                f'{best_embedding_dist / len(circuit):.3g} per gate,'
+                f'taking: {time_calculate_distance:.3g} s.\n\n'
             )
             print()
 
@@ -287,14 +337,15 @@ with open(log_path, 'w') as log_file:
         time_calculate_distance_total += time_calculate_distance
         time_find_min_distance_total += time_find_min_distance
 
-total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total + \
-                 time_find_min_distance_total
+total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_distance_total \
+                 + time_find_min_distance_total
 
 if verbose:
     def format_time(seconds):
         return str(
             datetime.timedelta(seconds=round(seconds))
         )
+
 
     print('Time spent...')
     print(
