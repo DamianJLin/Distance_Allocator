@@ -215,7 +215,7 @@ with open(log_path, 'a') as log_file:
 
         # Logging, printing, saving image to file.
         if embeddings_init:
-            img_path = out_dir / (
+            init_emb_img_path = out_dir / (
                     str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
                     + '__' + 'initial_embedding' + '.png'
             )
@@ -224,7 +224,7 @@ with open(log_path, 'a') as log_file:
                 log_to_alloc=logical_to_allocated,
                 graph=ag,
                 mapping=embeddings_init[0],
-                location=img_path,
+                location=init_emb_img_path,
             )
             log_data['num_vertices'] = sub.num_vertices(ignore_filter=True)
             log_data['num_edges'] = sub.num_vertices(ignore_filter=True)
@@ -331,6 +331,19 @@ with open(log_path, 'a') as log_file:
             format='png'
         )
         plt.close(fig)
+
+        # Draw final embedding.
+        final_emb_img_path = out_dir / (
+                str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
+                + '__' + 'best_embedding' + '.png'
+        )
+        save_embedding_image(
+            subgraph=sub,
+            log_to_alloc=logical_to_allocated,
+            graph=ag,
+            mapping=best_embedding,
+            location=final_emb_img_path,
+        )
 
         # Add time spent.
         time_initial_circuit_total += time_initial_circuit
