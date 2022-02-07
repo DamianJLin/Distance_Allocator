@@ -1,3 +1,3 @@
 .venv/
-experiment_1/lib/__pycache__/
-experiment_1/my_scripts/__pycache__/
+lib/__pycache__/
+my_scripts/__pycache__/
