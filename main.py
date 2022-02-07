@@ -59,7 +59,6 @@ if '-e' in sys.argv:
         raise ValueError('-e flag argument must be integer.')
 assert isinstance(n_embeddings, int)
 
-
 # Clear log path.
 for path in out_dir.iterdir():
     path.unlink()
@@ -74,15 +73,17 @@ time_find_min_distance_total = 0.0
 log_path = out_dir / 'log.csv'
 make_header = True
 with open(log_path, 'a') as log_file:
-
     # Loop through all combinations of architectures and circuits.
     for comb_index, (ag_path, circ_path) in enumerate(itertools.product(ag_paths, circ_paths)):
 
         # Write to log dict.
-        log_data = {}
+        log_data = {
+            'architecture': str(ag_path.name).removesuffix(".graphml"),
+            'circuit': str(circ_path.name).removesuffix(".qasm.txt"),
+        }
         print(
-            f'Allocating architecture: {colored(str(ag_path.stem).rstrip(".graphml"), "blue")}, '
-            f'circuit {colored(str(circ_path.stem).rstrip(".qasm.txt"), "blue")}...',
+            f'Allocating architecture: {colored(str(ag_path.name).removesuffix(".graphml"), "blue")}, '
+            f'circuit {colored(str(circ_path.name).removesuffix(".qasm.txt"), "blue")}...',
             flush=True
         )
 
@@ -124,7 +125,9 @@ with open(log_path, 'a') as log_file:
         # Dictionary for the physical qubit (vertex in sub) a logical qubit (int) is allocated to.
         logical_to_allocated = {}
 
+        # Keep track of which gates are allocated
         gate_allocation = np.zeros(len(circuit), dtype=bool)
+        circuit_allocated = []  # List for fast append.
 
         # Below algorithm for finding initial subcircuit:
         # while layer_forbids_embedding is False:
@@ -181,6 +184,7 @@ with open(log_path, 'a') as log_file:
 
                     if embeddings_init:
                         gate_allocation[i] = True
+                        circuit_allocated.append(np.asarray([u_log, v_log]))
                         embedding_found_in_layer = True
                         break
                     else:
@@ -210,6 +214,9 @@ with open(log_path, 'a') as log_file:
             if not embedding_found_in_layer:
                 layer_forbids_embedding = True
 
+        circuit_allocated = np.copy(np.asarray(circuit_allocated))
+        circuit_unallocated = np.copy(circuit[gate_allocation == 0, :])
+
         end_time = time.time()
         time_initial_circuit = end_time - start_time
 
@@ -226,8 +233,11 @@ with open(log_path, 'a') as log_file:
                 mapping=embeddings_init[0],
                 location=init_emb_img_path,
             )
-            log_data['num_vertices'] = sub.num_vertices(ignore_filter=True)
-            log_data['num_edges'] = sub.num_vertices(ignore_filter=True)
+            log_data['num_gates'] = len(circuit)
+            log_data['num_gates_allocated'] = len(circuit_allocated)
+            log_data['num_gates_unallocated'] = len(circuit_unallocated)
+            log_data['sub_vertices'] = sub.num_vertices(ignore_filter=True)
+            log_data['sub_edges'] = sub.num_edges(ignore_filter=True)
             log_data['init_subcircuit_time'] = f'{time_initial_circuit:.3g} s'
             if verbose:
                 print('done.', flush=True)
@@ -282,7 +292,7 @@ with open(log_path, 'a') as log_file:
 
             dist_cuml = 0
 
-            for (u_log, v_log) in circuit:
+            for (u_log, v_log) in circuit_unallocated:
                 if u_log in logical_to_allocated and v_log in logical_to_allocated:
                     # Find the allocation of u and v
                     u_allocated = logical_to_allocated[u_log]
@@ -305,8 +315,7 @@ with open(log_path, 'a') as log_file:
         time_calculate_min_dist = end_time - start_time
 
         log_data['best_dist'] = best_embedding_dist
-        log_data['num_gates'] = len(circuit)
-        log_data['best_dist_per_gate'] = best_embedding_dist / len(circuit)
+        log_data['best_embedding_efficiency'] = f'{best_embedding_dist / len(circuit):.3g}'
         log_data['best_dist_time'] = f'{time_calculate_min_dist:.3g} s'
         if verbose:
             print('done.', flush=True)
