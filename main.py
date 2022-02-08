@@ -4,6 +4,7 @@ import re
 import itertools
 import datetime
 import time
+import pickle
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -68,6 +69,11 @@ time_initial_circuit_total = 0.0
 time_find_embeddings_total = 0.0
 time_calculate_min_dist_total = 0.0
 time_find_min_distance_total = 0.0
+
+# Keep track of dist/circuit for plot
+dist_avg_dist = []
+fidls_avg_dist = []
+circ_name = []
 
 # Create log file and keep it open.
 log_path = out_dir / 'log.csv'
@@ -291,9 +297,11 @@ with open(log_path, 'a') as log_file:
         for i, emb in enumerate(embeddings_all):
 
             dist_cuml = 0
+            num_dist_calculations = 0
 
-            for (u_log, v_log) in circuit_unallocated:
+            for (u_log, v_log) in circuit:
                 if u_log in logical_to_allocated and v_log in logical_to_allocated:
+                    num_dist_calculations += 1
                     # Find the allocation of u and v
                     u_allocated = logical_to_allocated[u_log]
                     v_allocated = logical_to_allocated[v_log]
@@ -328,18 +336,18 @@ with open(log_path, 'a') as log_file:
             )
 
         # Calculate dist histogram and save.
-        fig, ax = plt.subplots()
-        ax.hist(distances, n_embeddings // 25 + 1)
+        fig1, ax1 = plt.subplots()
+        ax1.hist(distances, n_embeddings // 25 + 1)
         hist_path = out_dir / (
                 str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
                 + '__' + 'dist_hist' + '.png'
         )
-        fig.savefig(
+        fig1.savefig(
             fname=hist_path,
             dpi='figure',
             format='png'
         )
-        plt.close(fig)
+        plt.close(fig1)
 
         # Draw final embedding.
         final_emb_img_path = out_dir / (
@@ -359,11 +367,86 @@ with open(log_path, 'a') as log_file:
         time_find_embeddings_total += time_find_embeddings
         time_calculate_min_dist_total += time_calculate_min_dist
 
+        # Compare to FiDLS
+        fidls_in_dir = Path(__file__).resolve().parent / 'FiDLS_mappings'
+        in_path = fidls_in_dir / (str(circ_path.name).removesuffix(".qasm.txt") + '_FiDLS_embedding')
+        with open(in_path, 'rb') as in_file:
+            logical_to_emb_idx = pickle.load(in_file)
+
+            fidls_dist = 0
+            fidls_num_dist_calculations = 0
+
+            for (u_log, v_log) in circuit:
+                # Use same check as before for fair calculation.
+                if u_log in logical_to_allocated and v_log in logical_to_allocated:
+                    fidls_num_dist_calculations += 1
+                    # Find the index (in ag) of u and v.
+                    u_emb_idx = logical_to_emb_idx[u_log]
+                    v_emb_idx = logical_to_emb_idx[v_log]
+                    # Find vertex in ag.
+                    u_embedded = ag.vertex(u_emb_idx)
+                    v_embedded = ag.vertex(v_emb_idx)
+
+                    fidls_dist += dc.distance(
+                        u_embedded,
+                        v_embedded
+                    )
+
+            # For plotting
+            assert num_dist_calculations == fidls_num_dist_calculations
+            circ_name.append(str(circ_path.name).removesuffix(".qasm.txt"))
+            dist_avg_dist.append(best_embedding_dist / num_dist_calculations)
+            fidls_avg_dist.append(fidls_dist / num_dist_calculations)
+
         log_frame = pd.DataFrame(log_data, index=[comb_index])
         log_frame.to_csv(log_file, header=make_header)
         make_header = False
         if verbose:
             print(flush=True)
+
+
+# Plot Bar
+fig1: plt.Figure
+ax1: plt.Axes
+fig1, ax1 = plt.subplots()
+
+xs = np.arange(len(circ_name))
+width = 0.35
+
+ax1.bar(xs - width / 2, dist_avg_dist, width, label='Distance_Allocator', color='xkcd:blue')
+ax1.bar(xs + width / 2, fidls_avg_dist, width, label='FiDLS', color='xkcd:red')
+ax1.set_ylabel('Distance per gate evaluated.')
+
+ax1.set_xticks(xs, circ_name)
+
+for label in ax1.get_xticklabels():
+    label.set_rotation(90)
+    label.set_ha('right')
+    label.set_fontsize('xx-small')
+
+ax1.set_ylim(0.9, 1.9)
+ax1.legend()
+
+# Plot line
+fig2: plt.Figure
+ax2: plt.Axes
+fig2, ax2 = plt.subplots()
+
+ax2.plot(circ_name, dist_avg_dist, '-', label='Distance_Allocator', color='xkcd:blue')
+ax2.plot(circ_name, fidls_avg_dist, '-', label='Distance_Allocator', color='xkcd:red')
+
+for label in ax2.get_xticklabels():
+    label.set_rotation(90)
+    label.set_ha('right')
+    label.set_fontsize('xx-small')
+
+ax2.set_ylim(0.9, 1.9)
+ax2.legend()
+
+fig_dir = Path(__file__).resolve().parent / 'figures'
+
+fig1.savefig(fig_dir / f'comp__bar__{n_embeddings}.png', dpi=1000, bbox_inches='tight')
+fig2.savefig(fig_dir / f'comp__line__{n_embeddings}.png', dpi=1000, bbox_inches='tight')
 
 total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_min_dist_total
 
