@@ -291,6 +291,7 @@ with open(log_path, 'a') as log_file:
         for i, emb in enumerate(embeddings_all):
 
             dist_cuml = 0
+            num_gates_measured = 0
 
             for (u_log, v_log) in circuit_unallocated:
                 if u_log in logical_to_allocated and v_log in logical_to_allocated:
@@ -305,6 +306,7 @@ with open(log_path, 'a') as log_file:
                         u_embedded,
                         v_embedded
                     )
+                    num_gates_measured += 1
             distances[i] = dist_cuml
 
         # Find embedding of minimum distance.
@@ -315,14 +317,14 @@ with open(log_path, 'a') as log_file:
         time_calculate_min_dist = end_time - start_time
 
         log_data['best_dist'] = best_embedding_dist
-        log_data['best_embedding_efficiency'] = f'{best_embedding_dist / len(circuit):.3g}'
+        log_data['best_embedding_efficiency'] = f'{best_embedding_dist / num_gates_measured:.3g}'
         log_data['best_dist_time'] = f'{time_calculate_min_dist:.3g} s'
         if verbose:
             print('done.', flush=True)
             print(
                 f'\tMin. dist.: {best_embedding_dist}\n'
                 f'\tNo. gates.: {len(circuit)}\n'
-                f'\tMin. dist. per gate: {best_embedding_dist / len(circuit):.3g}\n'
+                f'\tMin. dist. per gate: {best_embedding_dist / num_gates_measured:.3g}\n'
                 f'\tTime: {time_calculate_min_dist:.3g} s.',
                 flush=True
             )
