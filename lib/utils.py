@@ -1,5 +1,6 @@
 import pathlib
 import graph_tool.all as gt
+import lib.architecture_layout
 
 
 def get_layer(circuit, mask, logical_qubits):
@@ -38,12 +39,14 @@ def get_layer(circuit, mask, logical_qubits):
 def save_embedding_image(
         subgraph: gt.Graph,
         graph: gt.Graph,
+        architecture: str,
         mapping: gt.VertexPropertyMap,
         location: pathlib.Path | type(None),
         log_to_alloc: dict
 ):
     """
     Save image of subgraph embedded in graph with mapping at location.
+    :param architecture: The string name of the architecture e.g. IBM_Tokyo.
     :param log_to_alloc: Map from logical vertex (int) to allocated vertex in sub.
     :param subgraph: Subgraph
     :param graph: Graph
@@ -61,15 +64,13 @@ def save_embedding_image(
     for s in subgraph.vertices():
         label_on_graph[graph.vertex(mapping[s])] = label_on_sub[s]
 
-    # Setting the position vertex property. Tailored to QTokyo only.
-    def pos(n):
-        y = n // 5
-        x = n % 5
-        return x, y
+    # Setting the position vertex property.
+    display_pos = None
 
-    display_pos = graph.new_vertex_property('vector<float>')
-    for v in graph.vertices():
-        display_pos[v] = pos(graph.vertex_index[v])
+    if architecture == 'IBM_Tokyo':
+        display_pos = lib.architecture_layout.tokyo_pos(graph)
+    elif architecture == 'IBM_Rochester':
+        display_pos = lib.architecture_layout.rochester_pos(graph)
 
     if location is not None:
         output_path = str(location)  # Save as file.

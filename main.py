@@ -76,14 +76,17 @@ with open(log_path, 'a') as log_file:
     # Loop through all combinations of architectures and circuits.
     for comb_index, (ag_path, circ_path) in enumerate(itertools.product(ag_paths, circ_paths)):
 
+        architecture_name = str(ag_path.name).removesuffix(".graphml")
+        circuit_name = str(circ_path.name).removesuffix(".qasm.txt")
+
         # Write to log dict.
         log_data = {
-            'architecture': str(ag_path.name).removesuffix(".graphml"),
+            'architecture': architecture_name,
             'circuit': str(circ_path.name).removesuffix(".qasm.txt"),
         }
         print(
-            f'Allocating architecture: {colored(str(ag_path.name).removesuffix(".graphml"), "blue")}, '
-            f'circuit {colored(str(circ_path.name).removesuffix(".qasm.txt"), "blue")}...',
+            f'Allocating architecture: {colored(architecture_name, "blue")}, '
+            f'circuit {colored(circuit_name, "blue")}...',
             flush=True
         )
 
@@ -223,15 +226,15 @@ with open(log_path, 'a') as log_file:
         # Logging, printing, saving image to file.
         if embeddings_init:
             init_emb_img_path = out_dir / (
-                    str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
-                    + '__' + 'initial_embedding' + '.png'
+                    architecture_name + '__' + circuit_name + '__' + 'initial_embedding' + '.png'
             )
             save_embedding_image(
                 subgraph=sub,
-                log_to_alloc=logical_to_allocated,
                 graph=ag,
+                architecture=architecture_name,
                 mapping=embeddings_init[0],
                 location=init_emb_img_path,
+                log_to_alloc=logical_to_allocated
             )
             log_data['num_gates'] = len(circuit)
             log_data['num_gates_allocated'] = len(circuit_allocated)
@@ -312,12 +315,16 @@ with open(log_path, 'a') as log_file:
         # Find embedding of minimum distance.
         idx_min, best_embedding_dist = min(enumerate(distances), key=lambda pair: pair[1])
         best_embedding = embeddings_all[idx_min]
+        if num_gates_measured == 0:
+            best_embedding_efficiency = 1
+        else:
+            best_embedding_efficiency = best_embedding_dist / num_gates_measured
 
         end_time = time.time()
         time_calculate_min_dist = end_time - start_time
 
         log_data['best_dist'] = best_embedding_dist
-        log_data['best_embedding_efficiency'] = f'{best_embedding_dist / num_gates_measured:.3g}'
+        log_data['best_embedding_efficiency'] = f'{best_embedding_efficiency:.3g}'
         log_data['best_dist_time'] = f'{time_calculate_min_dist:.3g} s'
         if verbose:
             print('done.', flush=True)
@@ -333,8 +340,7 @@ with open(log_path, 'a') as log_file:
         fig, ax = plt.subplots()
         ax.hist(distances, n_embeddings // 25 + 1)
         hist_path = out_dir / (
-                str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
-                + '__' + 'dist_hist' + '.png'
+                architecture_name + '__' + circuit_name + '__' + 'dist_hist' + '.png'
         )
         fig.savefig(
             fname=hist_path,
@@ -345,15 +351,15 @@ with open(log_path, 'a') as log_file:
 
         # Draw final embedding.
         final_emb_img_path = out_dir / (
-                str(ag_path.name).removesuffix('.graphml') + '__' + str(circ_path.name).removesuffix('.qasm.txt')
-                + '__' + 'best_embedding' + '.png'
+                architecture_name + '__' + circuit_name + '__' + 'best_embedding' + '.png'
         )
         save_embedding_image(
             subgraph=sub,
-            log_to_alloc=logical_to_allocated,
             graph=ag,
+            architecture=architecture_name,
             mapping=best_embedding,
             location=final_emb_img_path,
+            log_to_alloc=logical_to_allocated
         )
 
         # Add time spent.
