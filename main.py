@@ -293,6 +293,11 @@ with open(log_path, 'a') as log_file:
         # Calculate distance.
         for i, emb in enumerate(embeddings_all):
 
+            # Print percentage complete.
+            if verbose:
+                pc_str = str(int(i * 100 / len(embeddings_all))) + '%'
+                print(pc_str + '\b' * len(pc_str), end='', flush=True)
+
             dist_cuml = 0
             num_gates_measured = 0
 
