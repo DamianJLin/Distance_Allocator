@@ -40,6 +40,9 @@ ag_paths = sorted(list(
 circ_paths = sorted(list(
     circ_dir.glob('*.qasm.txt')
 ))
+# This branch produced embeddings for a single circuit on a single graph.
+assert len(circ_paths) == 1
+assert len(ag_paths) == 1
 
 # Script parameters.
 # Set verbosity.
@@ -73,6 +76,7 @@ time_find_min_distance_total = 0.0
 log_path = out_dir / 'log.csv'
 make_header = True
 with open(log_path, 'a') as log_file:
+
     # Loop through all combinations of architectures and circuits.
     for comb_index, (ag_path, circ_path) in enumerate(itertools.product(ag_paths, circ_paths)):
 
@@ -317,6 +321,30 @@ with open(log_path, 'a') as log_file:
                     num_gates_measured += 1
             distances[i] = dist_cuml
 
+        # Create embedding output path and open it.
+        emb_path = out_dir / '_inimap_list_rochester_custom_bigQ.txt'
+        with open(emb_path, 'w') as emb_file:
+
+            # Save all embeddings.
+            emb_out = []
+            for i, emb in enumerate(embeddings_all):
+                emb_out.append(
+                    [
+                        i + 1,
+                        [
+                            [
+                                v_log,
+                                emb[logical_to_allocated[v_log]]
+                            ] for v_log in logical_to_allocated
+                        ]
+                    ]
+                )
+            emb_file.write(str(emb_out))
+
+        # Save distances to .npy file.
+        dist_path = out_dir / 'distances.npy'
+        np.save(str(dist_path), distances)
+
         # Find embedding of minimum distance.
         idx_min, best_embedding_dist = min(enumerate(distances), key=lambda pair: pair[1])
         best_embedding = embeddings_all[idx_min]
@@ -343,7 +371,7 @@ with open(log_path, 'a') as log_file:
 
         # Calculate dist histogram and save.
         fig, ax = plt.subplots()
-        ax.hist(distances, n_embeddings // 25 + 1)
+        ax.hist(distances, 50)
         hist_path = out_dir / (
                 architecture_name + '__' + circuit_name + '__' + 'dist_hist' + '.png'
         )
