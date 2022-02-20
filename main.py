@@ -74,6 +74,7 @@ time_find_min_distance_total = 0.0
 log_path = out_dir / 'log.csv'
 make_header = True
 with open(log_path, 'a') as log_file:
+
     # Loop through all combinations of architectures and circuits.
     for comb_index, (ag_path, circ_path) in enumerate(itertools.product(ag_paths, circ_paths)):
 
@@ -104,9 +105,11 @@ with open(log_path, 'a') as log_file:
         if verbose:
             print('Finding initial subcircuit... ', end='', flush=True)
 
-        # Finding details of initial circuit and initial mapping.
+        # Finding details of initial circuit and initial mapping. Use a greedy algorithm that adds gates in the current
+        # layer.
         start_time = time.time()
 
+        # Find the initial mapping
         circuit_allocated, circuit_unallocated, embedding_init, sub, logical_to_allocated =\
             greedy_layer_initial_mapping(circuit, ag)
 
@@ -262,6 +265,7 @@ with open(log_path, 'a') as log_file:
 
 total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_min_dist_total
 
+# Print time summary.
 if verbose:
     def format_time(seconds):
         return str(
