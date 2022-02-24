@@ -19,6 +19,13 @@ def qasm_as_array(qasm_path):
     return circuit
 
 
+class NoSubgraphIsomorphism(Exception):
+    """
+    Custom exception raised when no isomorphic subgraph found.
+    """
+    pass
+
+
 def save_embedding_image(
         subgraph: gt.Graph,
         graph: gt.Graph,
@@ -69,9 +76,3 @@ def save_embedding_image(
         output=output_path
     )
 
-
-class NoSubgraphIsomorphism(Exception):
-    """
-    Custom exception raised when no isomorphic subgraph found.
-    """
-    pass

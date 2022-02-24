@@ -8,7 +8,7 @@ import graph_tool.all as gt
 class DistanceCalculator:
     """
     Calculator class that implements a distance function using memorisation to efficiently calculate distance between
-    physical qubits.
+    physical qubits u and v.
     """
 
     def __init__(self, graph: gt.Graph):

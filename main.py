@@ -11,6 +11,7 @@ import graph_tool.all as gt
 import lib.utils
 from lib.initial_mapping import greedy_layer_initial_mapping
 from lib.distance_calculator import DistanceCalculator
+from lib.circuit_transformation import circuit_transformation
 from termcolor import colored
 
 """
@@ -174,7 +175,7 @@ with open(log_path, 'a') as log_file:
         # Initialize distance array with distances np.inf.
         distances = np.full_like(embeddings_all, np.inf)
         # Initialise DistanceCalculator object for efficiency with repeated distance calls.
-        dc = DistanceCalculator(ag)
+        distance_calculator = DistanceCalculator(ag)
 
         for i, emb in enumerate(embeddings_all):
 
@@ -195,7 +196,7 @@ with open(log_path, 'a') as log_file:
                     u_embedded = ag.vertex(emb[u_allocated])
                     v_embedded = ag.vertex(emb[v_allocated])
                     # Find the distance between the u and v in ag when embedded via emb.
-                    dist_cuml += dc.distance(
+                    dist_cuml += distance_calculator.distance(
                         u_embedded,
                         v_embedded
                     )
@@ -252,20 +253,26 @@ with open(log_path, 'a') as log_file:
             log_to_alloc=logical_to_allocated
         )
 
+        # Calculate the quality of the circuit.
+        for emb in embeddings_all:
+            circuit_transformed, quality = circuit_transformation(emb, circuit, ag, distance_calculator)
+
         # Add time spent.
         time_initial_circuit_total += time_initial_circuit
         time_find_embeddings_total += time_find_embeddings
         time_calculate_min_dist_total += time_calculate_min_dist
 
+        # Write a column to log file.
         log_frame = pd.DataFrame(log_data, index=[comb_index])
         log_frame.to_csv(log_file, header=make_header)
         make_header = False
         if verbose:
             print(flush=True)
 
+
+# Create a time summary.
 total_time_all = time_initial_circuit_total + time_find_embeddings_total + time_calculate_min_dist_total
 
-# Print time summary.
 if verbose:
     def format_time(seconds):
         return str(
